@@ -69,15 +69,15 @@ class MainViewControllerTests: XCTestCase {
         XCTAssertTrue(spy.fetchRecordsCalled, "viewDidLoad() should ask the interactor to fetch records")
     }
 
-//    func testDisplaySomething() {
-//        // Given
-//        let viewModel = Main.Something.ViewModel()
-//
-//        // When
-//        loadView()
-//        sut.displaySomething(viewModel: viewModel)
-//
-//        // Then
-//        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
-//    }
+    func testDisplayRecord() {
+        // Given
+        let viewModel = Main.FetchRecords.ViewModel()
+
+        // When
+        loadView()
+        sut.displayRecord(viewModel: viewModel)
+
+        // Then
+        XCTAssertEqual(sut.fullButton.currentTitle, "Full", "displayRecord(viewModel:) should update the Full button title")
+    }
 }

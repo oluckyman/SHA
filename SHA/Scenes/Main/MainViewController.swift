@@ -67,8 +67,8 @@ class MainViewController: UIViewController, MainDisplayLogic {
 
     // MARK: - Record
 
-    //@IBOutlet weak var nameTextField: UITextField!
-
+    @IBOutlet weak var fullButton: UIButton!
+    
     func fetchRecords() {
         let request = Main.FetchRecords.Request()
         interactor?.fetchRecords(request: request)
