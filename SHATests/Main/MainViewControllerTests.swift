@@ -48,16 +48,16 @@ class MainViewControllerTests: XCTestCase {
     // MARK: - Test doubles
 
     class MainBusinessLogicSpy: MainBusinessLogic {
-        var doSomethingCalled = false
+        var fetchCurrentDateCalled = false
 
-        func doSomething(request: Main.Something.Request) {
-            doSomethingCalled = true
+        func fetchCurrentDate(request: Main.CurrentDate.Request) {
+            fetchCurrentDateCalled = true
         }
     }
 
     // MARK: - Tests
 
-    func testShouldDoSomethingWhenViewIsLoaded() {
+    func testShouldFetchCurrentDateWhenViewIsLoaded() {
         // Given
         let spy = MainBusinessLogicSpy()
         sut.interactor = spy
@@ -66,18 +66,18 @@ class MainViewControllerTests: XCTestCase {
         loadView()
 
         // Then
-        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+        XCTAssertTrue(spy.fetchCurrentDateCalled, "viewDidLoad() should ask the interactor to fetch current date")
     }
 
-    func testDisplaySomething() {
-        // Given
-        let viewModel = Main.Something.ViewModel()
-
-        // When
-        loadView()
-        sut.displaySomething(viewModel: viewModel)
-
-        // Then
-        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
-    }
+//    func testDisplaySomething() {
+//        // Given
+//        let viewModel = Main.Something.ViewModel()
+//
+//        // When
+//        loadView()
+//        sut.displaySomething(viewModel: viewModel)
+//
+//        // Then
+//        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+//    }
 }

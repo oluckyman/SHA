@@ -15,7 +15,7 @@ import UIKit
 enum Main {
     // MARK: - Use cases
 
-    enum Something {
+    enum CurrentDate {
         struct Request { }
         struct Response { }
         struct ViewModel { }
