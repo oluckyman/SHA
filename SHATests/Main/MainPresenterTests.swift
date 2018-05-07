@@ -62,9 +62,10 @@ class MainPresenterTests: XCTestCase {
         sut.presentRecord(response: response)
         
         // Then
-        XCTAssertEqual(true, true)
-        // TODO compare model fields with desired output one by one
-        // XCTAssertEqual(displayedOrder.id, "abc123", "Presenting fetched orders should properly format order ID")
+        let viewModel = spy.main_fetchRecords_viewModel!
+        XCTAssertEqual(viewModel.date, "Mon, May 7th", "Presentig record should properly format the date")
+        XCTAssertEqual(viewModel.full, "Full x 2", "Presentig record should properly format the full counter")
+        XCTAssertEqual(viewModel.express, "Express x 1", "Presentig record should properly format the express counter")
     }
     
     func testPresentRecordShouldAskViewControllerToDisplayRecord() {

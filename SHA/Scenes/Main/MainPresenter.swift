@@ -22,7 +22,14 @@ class MainPresenter: MainPresentationLogic {
     // MARK: - Record
 
     func presentRecord(response: Main.FetchRecords.Response) {
-        let viewModel = Main.FetchRecords.ViewModel(date: "", full: "", express: "")
+//        let date = ""
+        let full = 2
+        let express = 1
+        let displayDate = "Mon, May 7th"
+        let displayFull = "Full x \(full)"
+        let displayExpress = "Express x \(express)"
+        
+        let viewModel = Main.FetchRecords.ViewModel(date: displayDate, full: displayFull, express: displayExpress)
         viewController?.displayRecord(viewModel: viewModel)
     }
 }
