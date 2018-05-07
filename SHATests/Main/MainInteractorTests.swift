@@ -38,25 +38,37 @@ class MainInteractorTests: XCTestCase {
     // MARK: - Test doubles
 
     class MainPresentationLogicSpy: MainPresentationLogic {
-        var presentSomethingCalled = false
+        var presentRecordCalled = false
 
-        func presentSomething(response: Main.FetchRecords.Response) {
-            presentSomethingCalled = true
+        func presentRecord(response: Main.FetchRecords.Response) {
+            presentRecordCalled = true
+        }
+    }
+    
+    class MainWorkerSpy: MainWorker {
+        var fetchRecordsCalled = false
+        
+        override func fetchRecords(completionHandler: () -> Void) {
+            fetchRecordsCalled = true
+            completionHandler()
         }
     }
 
     // MARK: - Tests
 
-    func testFetchCurrentDate() {
+    func testFetchRecords() {
         // Given
-        let spy = MainPresentationLogicSpy()
-        sut.presenter = spy
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        let workerSpy = MainWorkerSpy()
+        sut.worker = workerSpy
         let request = Main.FetchRecords.Request()
 
         // When
         sut.fetchRecords(request: request)
 
         // Then
-        XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")
+        XCTAssertTrue(workerSpy.fetchRecordsCalled, "fetchRecords(request:) should ask the worker to fetch the records")
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "fetchRecords(request:) should ask the presenter to format the record")
     }
 }

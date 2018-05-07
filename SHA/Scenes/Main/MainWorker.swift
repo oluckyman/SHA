@@ -13,5 +13,7 @@
 import UIKit
 
 class MainWorker {
-    func doSomeWork() { }
+    func fetchRecords(completionHandler: () -> Void) {
+        completionHandler()
+    }
 }

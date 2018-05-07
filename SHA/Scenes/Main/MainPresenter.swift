@@ -13,15 +13,15 @@
 import UIKit
 
 protocol MainPresentationLogic {
-    func presentSomething(response: Main.FetchRecords.Response)
+    func presentRecord(response: Main.FetchRecords.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
     weak var viewController: MainDisplayLogic?
 
-    // MARK: - Current Date
+    // MARK: - Record
 
-    func presentSomething(response: Main.FetchRecords.Response) {
+    func presentRecord(response: Main.FetchRecords.Response) {
         let viewModel = Main.FetchRecords.ViewModel()
         viewController?.displaySomething(viewModel: viewModel)
     }

@@ -22,16 +22,14 @@ protocol MainDataStore {
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
-    var worker: MainWorker?
-    //var name: String = ""
+    var worker = MainWorker()
     
     // MARK: - Records
     
     func fetchRecords(request: Main.FetchRecords.Request) {
-        worker = MainWorker()
-        worker?.doSomeWork()
-        
-        let response = Main.FetchRecords.Response()
-        presenter?.presentSomething(response: response)
+        worker.fetchRecords {
+            let response = Main.FetchRecords.Response()
+            presenter?.presentRecord(response: response)
+        }
     }
 }
