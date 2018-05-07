@@ -48,7 +48,7 @@ class MainInteractorTests: XCTestCase {
     class RecordsWorkerSpy: RecordsWorker {
         var fetchRecordsCalled = false
         
-        override func fetchRecords(completionHandler: () -> Void) {
+        override func fetchRecords(completionHandler: @escaping () -> Void) {
             fetchRecordsCalled = true
             completionHandler()
         }

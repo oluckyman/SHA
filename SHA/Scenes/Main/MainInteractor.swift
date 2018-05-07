@@ -30,7 +30,7 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     func fetchRecords(request: Main.FetchRecords.Request) {
         worker.fetchRecords {
             let response = Main.FetchRecords.Response()
-            presenter?.presentRecord(response: response)
+            self.presenter?.presentRecord(response: response)
         }
     }
 }

@@ -32,18 +32,36 @@ class RecordsWorkerTests: XCTestCase {
     // MARK: - Test setup
 
     func setupWorker() {
-//        sut = RecordsWorker()
+        sut = RecordsWorker(recordsStore: RecordsMemStoreSpy())
     }
 
     // MARK: - Test doubles
+    
+    class RecordsMemStoreSpy : RecordsMemStore {
+        var fetchRecordsCalled = false
+        
+        override func fetchRecords(completionHandler: @escaping () -> Void) {
+            fetchRecordsCalled = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                completionHandler()
+            }
+        }
+    }
 
     // MARK: - Tests
 
-    func testSomething() {
+    func testFetchRecords() {
         // Given
+        let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
+        let expectRecords = expectation(description: "Wait for fetched records")
 
         // When
+        sut.fetchRecords {
+            expectRecords.fulfill()
+        }
 
         // Then
+        XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecords() should ask the data store for a list of records")
+        wait(for: [expectRecords], timeout: 0.6)
     }
 }

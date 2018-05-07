@@ -13,7 +13,7 @@
 import UIKit
 
 protocol RecordsStore {
-    func fetchRecords(completionHandler: () -> Void)
+    func fetchRecords(completionHandler: @escaping () -> Void)
 }
 
 class RecordsWorker {
@@ -23,7 +23,9 @@ class RecordsWorker {
         self.recordsStore = recordsStore
     }
     
-    func fetchRecords(completionHandler: () -> Void) {
-        completionHandler()
+    func fetchRecords(completionHandler: @escaping () -> Void) {
+        recordsStore.fetchRecords {
+            completionHandler()
+        }
     }
 }
