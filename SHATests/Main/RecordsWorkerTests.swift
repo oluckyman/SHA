@@ -32,7 +32,7 @@ class RecordsWorkerTests: XCTestCase {
     // MARK: - Test setup
 
     func setupWorker() {
-        sut = RecordsWorker()
+//        sut = RecordsWorker()
     }
 
     // MARK: - Test doubles

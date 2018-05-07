@@ -12,7 +12,17 @@
 
 import UIKit
 
+protocol RecordsStore {
+    func fetchRecords(completionHandler: () -> Void)
+}
+
 class RecordsWorker {
+    var recordsStore: RecordsStore
+    
+    init(recordsStore: RecordsStore) {
+        self.recordsStore = recordsStore
+    }
+    
     func fetchRecords(completionHandler: () -> Void) {
         completionHandler()
     }

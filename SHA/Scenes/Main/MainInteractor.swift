@@ -12,6 +12,7 @@
 
 import UIKit
 
+
 protocol MainBusinessLogic {
     func fetchRecords(request: Main.FetchRecords.Request)
 }
@@ -22,7 +23,7 @@ protocol MainDataStore {
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
-    var worker = RecordsWorker()
+    var worker = RecordsWorker(recordsStore: RecordsMemStore())
     
     // MARK: - Records
     

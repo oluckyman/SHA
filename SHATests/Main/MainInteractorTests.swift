@@ -60,7 +60,7 @@ class MainInteractorTests: XCTestCase {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
-        let workerSpy = RecordsWorkerSpy()
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
         sut.worker = workerSpy
         let request = Main.FetchRecords.Request()
 

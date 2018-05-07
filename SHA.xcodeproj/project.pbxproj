@@ -21,6 +21,7 @@
 		A0C078152090923F001A5FB0 /* MainInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078112090923F001A5FB0 /* MainInteractorTests.swift */; };
 		A0C078162090923F001A5FB0 /* RecordsWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */; };
 		A0C078172090923F001A5FB0 /* MainPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078132090923F001A5FB0 /* MainPresenterTests.swift */; };
+		A0C46D6B20A06B9D007263DA /* RecordsMemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C46D6A20A06B9D007263DA /* RecordsMemStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		A0C078112090923F001A5FB0 /* MainInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractorTests.swift; sourceTree = "<group>"; };
 		A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsWorkerTests.swift; sourceTree = "<group>"; };
 		A0C078132090923F001A5FB0 /* MainPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenterTests.swift; sourceTree = "<group>"; };
+		A0C46D6A20A06B9D007263DA /* RecordsMemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsMemStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 				A0C0780520908F12001A5FB0 /* MainRouter.swift */,
 				A0C0780720908F12001A5FB0 /* MainViewController.swift */,
 				A0C0780420908F12001A5FB0 /* RecordsWorker.swift */,
+				A0C46D6A20A06B9D007263DA /* RecordsMemStore.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				A0C0780920908F12001A5FB0 /* MainPresenter.swift in Sources */,
 				A0C0780A20908F12001A5FB0 /* RecordsWorker.swift in Sources */,
 				A0C077E220907C1F001A5FB0 /* AppDelegate.swift in Sources */,
+				A0C46D6B20A06B9D007263DA /* RecordsMemStore.swift in Sources */,
 				A0C0780E20908F12001A5FB0 /* MainInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
