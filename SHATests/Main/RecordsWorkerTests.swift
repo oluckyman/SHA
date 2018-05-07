@@ -1,5 +1,5 @@
 //
-//  MainWorkerTests.swift
+//  RecordsWorkerTests.swift
 //  SHA
 //
 //  Created by Ilyá Belsky on 4/25/18.
@@ -13,16 +13,16 @@
 @testable import SHA
 import XCTest
 
-class MainWorkerTests: XCTestCase {
+class RecordsWorkerTests: XCTestCase {
     // MARK: - Subject under test
 
-    var sut: MainWorker!
+    var sut: RecordsWorker!
 
     // MARK: - Test lifecycle
 
     override func setUp() {
         super.setUp()
-        setupMainWorker()
+        setupWorker()
     }
 
     override func tearDown() {
@@ -31,8 +31,8 @@ class MainWorkerTests: XCTestCase {
 
     // MARK: - Test setup
 
-    func setupMainWorker() {
-        sut = MainWorker()
+    func setupWorker() {
+        sut = RecordsWorker()
     }
 
     // MARK: - Test doubles

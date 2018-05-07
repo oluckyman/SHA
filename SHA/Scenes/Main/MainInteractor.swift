@@ -22,7 +22,7 @@ protocol MainDataStore {
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
-    var worker = MainWorker()
+    var worker = RecordsWorker()
     
     // MARK: - Records
     

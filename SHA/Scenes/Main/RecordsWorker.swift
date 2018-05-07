@@ -1,5 +1,5 @@
 //
-//  MainWorker.swift
+//  RecordsWorker.swift
 //  SHA
 //
 //  Created by Ilyá Belsky on 4/25/18.
@@ -12,7 +12,7 @@
 
 import UIKit
 
-class MainWorker {
+class RecordsWorker {
     func fetchRecords(completionHandler: () -> Void) {
         completionHandler()
     }

@@ -12,14 +12,14 @@
 		A0C077E920907C24001A5FB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C077E820907C24001A5FB0 /* Assets.xcassets */; };
 		A0C077EC20907C24001A5FB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C077EA20907C24001A5FB0 /* LaunchScreen.storyboard */; };
 		A0C0780920908F12001A5FB0 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0780320908F12001A5FB0 /* MainPresenter.swift */; };
-		A0C0780A20908F12001A5FB0 /* MainWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0780420908F12001A5FB0 /* MainWorker.swift */; };
+		A0C0780A20908F12001A5FB0 /* RecordsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0780420908F12001A5FB0 /* RecordsWorker.swift */; };
 		A0C0780B20908F12001A5FB0 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0780520908F12001A5FB0 /* MainRouter.swift */; };
 		A0C0780C20908F12001A5FB0 /* MainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0780620908F12001A5FB0 /* MainModels.swift */; };
 		A0C0780D20908F12001A5FB0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0780720908F12001A5FB0 /* MainViewController.swift */; };
 		A0C0780E20908F12001A5FB0 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0780820908F12001A5FB0 /* MainInteractor.swift */; };
 		A0C078142090923F001A5FB0 /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078102090923F001A5FB0 /* MainViewControllerTests.swift */; };
 		A0C078152090923F001A5FB0 /* MainInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078112090923F001A5FB0 /* MainInteractorTests.swift */; };
-		A0C078162090923F001A5FB0 /* MainWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078122090923F001A5FB0 /* MainWorkerTests.swift */; };
+		A0C078162090923F001A5FB0 /* RecordsWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */; };
 		A0C078172090923F001A5FB0 /* MainPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C078132090923F001A5FB0 /* MainPresenterTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,14 +43,14 @@
 		A0C077F220907C24001A5FB0 /* SHATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SHATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C077F820907C24001A5FB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C0780320908F12001A5FB0 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
-		A0C0780420908F12001A5FB0 /* MainWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorker.swift; sourceTree = "<group>"; };
+		A0C0780420908F12001A5FB0 /* RecordsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsWorker.swift; sourceTree = "<group>"; };
 		A0C0780520908F12001A5FB0 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		A0C0780620908F12001A5FB0 /* MainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModels.swift; sourceTree = "<group>"; };
 		A0C0780720908F12001A5FB0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A0C0780820908F12001A5FB0 /* MainInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
 		A0C078102090923F001A5FB0 /* MainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerTests.swift; sourceTree = "<group>"; };
 		A0C078112090923F001A5FB0 /* MainInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractorTests.swift; sourceTree = "<group>"; };
-		A0C078122090923F001A5FB0 /* MainWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorkerTests.swift; sourceTree = "<group>"; };
+		A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsWorkerTests.swift; sourceTree = "<group>"; };
 		A0C078132090923F001A5FB0 /* MainPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,7 +128,7 @@
 				A0C0780320908F12001A5FB0 /* MainPresenter.swift */,
 				A0C0780520908F12001A5FB0 /* MainRouter.swift */,
 				A0C0780720908F12001A5FB0 /* MainViewController.swift */,
-				A0C0780420908F12001A5FB0 /* MainWorker.swift */,
+				A0C0780420908F12001A5FB0 /* RecordsWorker.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -138,7 +138,7 @@
 			children = (
 				A0C078102090923F001A5FB0 /* MainViewControllerTests.swift */,
 				A0C078112090923F001A5FB0 /* MainInteractorTests.swift */,
-				A0C078122090923F001A5FB0 /* MainWorkerTests.swift */,
+				A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */,
 				A0C078132090923F001A5FB0 /* MainPresenterTests.swift */,
 			);
 			path = Main;
@@ -249,7 +249,7 @@
 				A0C0780B20908F12001A5FB0 /* MainRouter.swift in Sources */,
 				A0C0780C20908F12001A5FB0 /* MainModels.swift in Sources */,
 				A0C0780920908F12001A5FB0 /* MainPresenter.swift in Sources */,
-				A0C0780A20908F12001A5FB0 /* MainWorker.swift in Sources */,
+				A0C0780A20908F12001A5FB0 /* RecordsWorker.swift in Sources */,
 				A0C077E220907C1F001A5FB0 /* AppDelegate.swift in Sources */,
 				A0C0780E20908F12001A5FB0 /* MainInteractor.swift in Sources */,
 			);
@@ -261,7 +261,7 @@
 			files = (
 				A0C078142090923F001A5FB0 /* MainViewControllerTests.swift in Sources */,
 				A0C078152090923F001A5FB0 /* MainInteractorTests.swift in Sources */,
-				A0C078162090923F001A5FB0 /* MainWorkerTests.swift in Sources */,
+				A0C078162090923F001A5FB0 /* RecordsWorkerTests.swift in Sources */,
 				A0C078172090923F001A5FB0 /* MainPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

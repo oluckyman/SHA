@@ -45,7 +45,7 @@ class MainInteractorTests: XCTestCase {
         }
     }
     
-    class MainWorkerSpy: MainWorker {
+    class RecordsWorkerSpy: RecordsWorker {
         var fetchRecordsCalled = false
         
         override func fetchRecords(completionHandler: () -> Void) {
@@ -60,7 +60,7 @@ class MainInteractorTests: XCTestCase {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
-        let workerSpy = MainWorkerSpy()
+        let workerSpy = RecordsWorkerSpy()
         sut.worker = workerSpy
         let request = Main.FetchRecords.Request()
 
