@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MainDisplayLogic: class {
-    func displaySomething(viewModel: Main.FetchRecords.ViewModel)
+    func displayRecord(viewModel: Main.FetchRecords.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -74,7 +74,7 @@ class MainViewController: UIViewController, MainDisplayLogic {
         interactor?.fetchRecords(request: request)
     }
 
-    func displaySomething(viewModel: Main.FetchRecords.ViewModel) {
+    func displayRecord(viewModel: Main.FetchRecords.ViewModel) {
         //nameTextField.text = viewModel.name
     }
 }

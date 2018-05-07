@@ -23,6 +23,6 @@ class MainPresenter: MainPresentationLogic {
 
     func presentRecord(response: Main.FetchRecords.Response) {
         let viewModel = Main.FetchRecords.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+        viewController?.displayRecord(viewModel: viewModel)
     }
 }

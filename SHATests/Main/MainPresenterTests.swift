@@ -38,16 +38,36 @@ class MainPresenterTests: XCTestCase {
     // MARK: - Test doubles
 
     class MainDisplayLogicSpy: MainDisplayLogic {
-        var displaySomethingCalled = false
+        var displayRecordCalled = false
+        var main_fetchRecords_viewModel: Main.FetchRecords.ViewModel!
 
-        func displaySomething(viewModel: Main.FetchRecords.ViewModel) {
-            displaySomethingCalled = true
+        func displayRecord(viewModel: Main.FetchRecords.ViewModel) {
+            displayRecordCalled = true
+            // TODO test fields of the view model as described here
+            // https://clean-swift.com/clean-swift-tdd-part-4-presenter/
+            main_fetchRecords_viewModel = viewModel
         }
     }
 
     // MARK: - Tests
 
-    func testPresentSomething() {
+    func testPresentRecordShouldFormatRecordForDisplay() {
+        // Given
+        let spy = MainDisplayLogicSpy()
+        sut.viewController = spy
+        // TODO insert fake date into response here
+        let response = Main.FetchRecords.Response()
+        
+        // When
+        sut.presentRecord(response: response)
+        
+        // Then
+        XCTAssertEqual(true, true)
+        // TODO compare model fields with desired output one by one
+        // XCTAssertEqual(displayedOrder.id, "abc123", "Presenting fetched orders should properly format order ID")
+    }
+    
+    func testPresentRecordShouldAskViewControllerToDisplayRecord() {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
@@ -57,6 +77,6 @@ class MainPresenterTests: XCTestCase {
         sut.presentRecord(response: response)
 
         // Then
-        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+        XCTAssertTrue(spy.displayRecordCalled, "presentRecord(response:) should ask the view controller to display the result")
     }
 }
