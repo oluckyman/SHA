@@ -71,13 +71,16 @@ class MainViewControllerTests: XCTestCase {
 
     func testDisplayRecord() {
         // Given
-        let viewModel = Main.FetchRecords.ViewModel()
+        let expected = (date: "Mon, May 7th", full: "Full x 2", express: "Express x 1")
+        let viewModel = Main.FetchRecords.ViewModel(date: expected.date, full: expected.full, express: expected.express)
 
         // When
         loadView()
         sut.displayRecord(viewModel: viewModel)
 
         // Then
-        XCTAssertEqual(sut.fullButton.currentTitle, "Full", "displayRecord(viewModel:) should update the Full button title")
+        XCTAssertEqual(sut.dateLabel.text, expected.date, "displayRecord(viewModel:) should update the Date label")
+        XCTAssertEqual(sut.fullButton.currentTitle, expected.full, "displayRecord(viewModel:) should update the Full button title")
+        XCTAssertEqual(sut.expressButton.currentTitle, expected.express, "displayRecord(viewModel:) should update the Expres button title")
     }
 }

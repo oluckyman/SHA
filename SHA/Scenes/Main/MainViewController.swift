@@ -67,7 +67,9 @@ class MainViewController: UIViewController, MainDisplayLogic {
 
     // MARK: - Record
 
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var fullButton: UIButton!
+    @IBOutlet weak var expressButton: UIButton!
     
     func fetchRecords() {
         let request = Main.FetchRecords.Request()
@@ -75,6 +77,8 @@ class MainViewController: UIViewController, MainDisplayLogic {
     }
 
     func displayRecord(viewModel: Main.FetchRecords.ViewModel) {
-        //nameTextField.text = viewModel.name
+        dateLabel.text = viewModel.date
+        fullButton.setTitle(viewModel.full, for: .normal)
+        expressButton.setTitle(viewModel.express, for: .normal)
     }
 }
