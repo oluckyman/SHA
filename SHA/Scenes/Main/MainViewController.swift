@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MainDisplayLogic: class {
-    func displaySomething(viewModel: Main.CurrentDate.ViewModel)
+    func displaySomething(viewModel: Main.FetchRecords.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -62,19 +62,19 @@ class MainViewController: UIViewController, MainDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchCurrentDate()
+        fetchRecords()
     }
 
-    // MARK: - Current Date
+    // MARK: - Record
 
     //@IBOutlet weak var nameTextField: UITextField!
 
-    func fetchCurrentDate() {
-        let request = Main.CurrentDate.Request()
-        interactor?.fetchCurrentDate(request: request)
+    func fetchRecords() {
+        let request = Main.FetchRecords.Request()
+        interactor?.fetchRecords(request: request)
     }
 
-    func displaySomething(viewModel: Main.CurrentDate.ViewModel) {
+    func displaySomething(viewModel: Main.FetchRecords.ViewModel) {
         //nameTextField.text = viewModel.name
     }
 }

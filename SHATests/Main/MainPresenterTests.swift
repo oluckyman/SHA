@@ -40,7 +40,7 @@ class MainPresenterTests: XCTestCase {
     class MainDisplayLogicSpy: MainDisplayLogic {
         var displaySomethingCalled = false
 
-        func displaySomething(viewModel: Main.CurrentDate.ViewModel) {
+        func displaySomething(viewModel: Main.FetchRecords.ViewModel) {
             displaySomethingCalled = true
         }
     }
@@ -51,7 +51,7 @@ class MainPresenterTests: XCTestCase {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
-        let response = Main.CurrentDate.Response()
+        let response = Main.FetchRecords.Response()
 
         // When
         sut.presentSomething(response: response)

@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MainBusinessLogic {
-    func fetchCurrentDate(request: Main.CurrentDate.Request)
+    func fetchRecords(request: Main.FetchRecords.Request)
 }
 
 protocol MainDataStore {
@@ -25,13 +25,13 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     var worker: MainWorker?
     //var name: String = ""
     
-    // MARK: - Current Date
+    // MARK: - Records
     
-    func fetchCurrentDate(request: Main.CurrentDate.Request) {
+    func fetchRecords(request: Main.FetchRecords.Request) {
         worker = MainWorker()
         worker?.doSomeWork()
         
-        let response = Main.CurrentDate.Response()
+        let response = Main.FetchRecords.Response()
         presenter?.presentSomething(response: response)
     }
 }

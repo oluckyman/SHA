@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MainPresentationLogic {
-    func presentSomething(response: Main.CurrentDate.Response)
+    func presentSomething(response: Main.FetchRecords.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
@@ -21,8 +21,8 @@ class MainPresenter: MainPresentationLogic {
 
     // MARK: - Current Date
 
-    func presentSomething(response: Main.CurrentDate.Response) {
-        let viewModel = Main.CurrentDate.ViewModel()
+    func presentSomething(response: Main.FetchRecords.Response) {
+        let viewModel = Main.FetchRecords.ViewModel()
         viewController?.displaySomething(viewModel: viewModel)
     }
 }

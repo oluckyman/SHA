@@ -40,21 +40,21 @@ class MainInteractorTests: XCTestCase {
     class MainPresentationLogicSpy: MainPresentationLogic {
         var presentSomethingCalled = false
 
-        func presentSomething(response: Main.CurrentDate.Response) {
+        func presentSomething(response: Main.FetchRecords.Response) {
             presentSomethingCalled = true
         }
     }
 
     // MARK: - Tests
 
-    func testDoSomething() {
+    func testFetchCurrentDate() {
         // Given
         let spy = MainPresentationLogicSpy()
         sut.presenter = spy
-        let request = Main.CurrentDate.Request()
+        let request = Main.FetchRecords.Request()
 
         // When
-        sut.fetchCurrentDate(request: request)
+        sut.fetchRecords(request: request)
 
         // Then
         XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")

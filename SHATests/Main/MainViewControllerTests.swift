@@ -48,16 +48,16 @@ class MainViewControllerTests: XCTestCase {
     // MARK: - Test doubles
 
     class MainBusinessLogicSpy: MainBusinessLogic {
-        var fetchCurrentDateCalled = false
+        var fetchRecordsCalled = false
 
-        func fetchCurrentDate(request: Main.CurrentDate.Request) {
-            fetchCurrentDateCalled = true
+        func fetchRecords(request: Main.FetchRecords.Request) {
+            fetchRecordsCalled = true
         }
     }
 
     // MARK: - Tests
 
-    func testShouldFetchCurrentDateWhenViewIsLoaded() {
+    func testShouldFetchRecordsWhenViewIsLoaded() {
         // Given
         let spy = MainBusinessLogicSpy()
         sut.interactor = spy
@@ -66,7 +66,7 @@ class MainViewControllerTests: XCTestCase {
         loadView()
 
         // Then
-        XCTAssertTrue(spy.fetchCurrentDateCalled, "viewDidLoad() should ask the interactor to fetch current date")
+        XCTAssertTrue(spy.fetchRecordsCalled, "viewDidLoad() should ask the interactor to fetch records")
     }
 
 //    func testDisplaySomething() {
