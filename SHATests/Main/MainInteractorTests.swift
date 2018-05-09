@@ -48,9 +48,10 @@ class MainInteractorTests: XCTestCase {
     class RecordsWorkerSpy: RecordsWorker {
         var fetchRecordsCalled = false
         
-        override func fetchRecords(completionHandler: @escaping () -> Void) {
+        override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
             fetchRecordsCalled = true
-            completionHandler()
+            let record1 = Record(date: Date(from: "2018-01-01")!, full: 1, express: 1)
+            completionHandler([record1])
         }
     }
 

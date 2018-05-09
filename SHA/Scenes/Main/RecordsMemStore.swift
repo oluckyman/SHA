@@ -9,7 +9,8 @@
 import Foundation
 
 class RecordsMemStore: RecordsStore {
-    func fetchRecords(completionHandler: @escaping () -> Void) {
-        completionHandler()
+    func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
+        let records: [Record] = []
+        completionHandler(records)
     }
 }

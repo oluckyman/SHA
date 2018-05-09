@@ -28,7 +28,7 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     // MARK: - Records
     
     func fetchRecords(request: Main.FetchRecords.Request) {
-        worker.fetchRecords {
+        worker.fetchRecords { records in
             // TODO: store fetched records into internal data store for later access
             // TODO: select currentDate record and put it into repsonse
             let today = Date()

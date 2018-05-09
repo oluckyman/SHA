@@ -40,10 +40,10 @@ class RecordsWorkerTests: XCTestCase {
     class RecordsMemStoreSpy : RecordsMemStore {
         var fetchRecordsCalled = false
         
-        override func fetchRecords(completionHandler: @escaping () -> Void) {
+        override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
             fetchRecordsCalled = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                completionHandler()
+                completionHandler([Record]())
             }
         }
     }
@@ -56,7 +56,7 @@ class RecordsWorkerTests: XCTestCase {
         let expectRecords = expectation(description: "Wait for fetched records")
 
         // When
-        sut.fetchRecords {
+        sut.fetchRecords { records in
             expectRecords.fulfill()
         }
 
