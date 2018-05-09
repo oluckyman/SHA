@@ -29,7 +29,11 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     
     func fetchRecords(request: Main.FetchRecords.Request) {
         worker.fetchRecords {
-            let response = Main.FetchRecords.Response()
+            // TODO: store fetched records into internal data store for later access
+            // TODO: select currentDate record and put it into repsonse
+            let today = Date()
+            let currentRecord = Record(date: today, full: 0, express: 0)
+            let response = Main.FetchRecords.Response(record: currentRecord)
             self.presenter?.presentRecord(response: response)
         }
     }

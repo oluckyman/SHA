@@ -18,16 +18,23 @@ protocol MainPresentationLogic {
 
 class MainPresenter: MainPresentationLogic {
     weak var viewController: MainDisplayLogic?
+    
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("EdMMM")
+        return dateFormatter
+    }()
 
     // MARK: - Record
 
     func presentRecord(response: Main.FetchRecords.Response) {
-//        let date = ""
-        let full = 2
-        let express = 1
-        let displayDate = "Mon, May 7th"
-        let displayFull = "Full x \(full)"
-        let displayExpress = "Express x \(express)"
+        let record = response.record
+        let date = record.date
+        let full = record.full
+        let express = record.express
+        let displayDate = dateFormatter.string(from: date)
+        let displayFull = full == 0 ? "Full" : "Full x \(full)"
+        let displayExpress = express == 0 ? "Express" : "Express x \(express)"
         
         let viewModel = Main.FetchRecords.ViewModel(date: displayDate, full: displayFull, express: displayExpress)
         viewController?.displayRecord(viewModel: viewModel)

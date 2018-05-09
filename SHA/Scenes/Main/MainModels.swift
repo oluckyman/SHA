@@ -17,7 +17,9 @@ enum Main {
 
     enum FetchRecords {
         struct Request { }
-        struct Response { }
+        struct Response {
+            var record: Record
+        }
         struct ViewModel {
             var date: String
             var full: String

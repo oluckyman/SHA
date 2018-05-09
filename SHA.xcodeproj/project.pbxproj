@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0543D6E20A2C50300FF88B4 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0543D6D20A2C50300FF88B4 /* Record.swift */; };
+		A0543D7020A2C9B100FF88B4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0543D6F20A2C9B100FF88B4 /* Extensions.swift */; };
 		A0C077E220907C1F001A5FB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C077E120907C1F001A5FB0 /* AppDelegate.swift */; };
 		A0C077E720907C1F001A5FB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C077E520907C1F001A5FB0 /* Main.storyboard */; };
 		A0C077E920907C24001A5FB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C077E820907C24001A5FB0 /* Assets.xcassets */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A0543D6D20A2C50300FF88B4 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		A0543D6F20A2C9B100FF88B4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A0C077DE20907C1F001A5FB0 /* SHA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SHA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C077E120907C1F001A5FB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0C077E620907C1F001A5FB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -74,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0543D6C20A2C4EF00FF88B4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A0543D6D20A2C50300FF88B4 /* Record.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A0C077D520907C1F001A5FB0 = {
 			isa = PBXGroup;
 			children = (
@@ -95,11 +107,13 @@
 		A0C077E020907C1F001A5FB0 /* SHA */ = {
 			isa = PBXGroup;
 			children = (
+				A0543D6C20A2C4EF00FF88B4 /* Models */,
 				A0C0780120907CAD001A5FB0 /* Scenes */,
 				A0C077E120907C1F001A5FB0 /* AppDelegate.swift */,
 				A0C077E820907C24001A5FB0 /* Assets.xcassets */,
 				A0C077EA20907C24001A5FB0 /* LaunchScreen.storyboard */,
 				A0C077ED20907C24001A5FB0 /* Info.plist */,
+				A0543D6F20A2C9B100FF88B4 /* Extensions.swift */,
 			);
 			path = SHA;
 			sourceTree = "<group>";
@@ -139,10 +153,10 @@
 		A0C0780F20909220001A5FB0 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				A0C078102090923F001A5FB0 /* MainViewControllerTests.swift */,
 				A0C078112090923F001A5FB0 /* MainInteractorTests.swift */,
-				A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */,
 				A0C078132090923F001A5FB0 /* MainPresenterTests.swift */,
+				A0C078102090923F001A5FB0 /* MainViewControllerTests.swift */,
+				A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -250,8 +264,10 @@
 			files = (
 				A0C0780D20908F12001A5FB0 /* MainViewController.swift in Sources */,
 				A0C0780B20908F12001A5FB0 /* MainRouter.swift in Sources */,
+				A0543D6E20A2C50300FF88B4 /* Record.swift in Sources */,
 				A0C0780C20908F12001A5FB0 /* MainModels.swift in Sources */,
 				A0C0780920908F12001A5FB0 /* MainPresenter.swift in Sources */,
+				A0543D7020A2C9B100FF88B4 /* Extensions.swift in Sources */,
 				A0C0780A20908F12001A5FB0 /* RecordsWorker.swift in Sources */,
 				A0C077E220907C1F001A5FB0 /* AppDelegate.swift in Sources */,
 				A0C46D6B20A06B9D007263DA /* RecordsMemStore.swift in Sources */,

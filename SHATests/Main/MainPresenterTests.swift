@@ -51,19 +51,36 @@ class MainPresenterTests: XCTestCase {
 
     // MARK: - Tests
 
-    func testPresentRecordShouldFormatRecordForDisplay() {
+    func testPresentRecordShouldFormatEmptyRecordForDisplay() {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
-        // TODO insert fake date into response here
-        let response = Main.FetchRecords.Response()
+        let record = Record(date: Date(from: "2018-05-08")!, full: 0, express: 0)
+        let response = Main.FetchRecords.Response(record: record)
         
         // When
         sut.presentRecord(response: response)
         
         // Then
         let viewModel = spy.main_fetchRecords_viewModel!
-        XCTAssertEqual(viewModel.date, "Mon, May 7th", "Presentig record should properly format the date")
+        XCTAssertEqual(viewModel.date, "Tue, May 8", "Presentig record should properly format the date")
+        XCTAssertEqual(viewModel.full, "Full", "Presentig record should properly format the full counter")
+        XCTAssertEqual(viewModel.express, "Express", "Presentig record should properly format the express counter")
+    }
+    
+    func testPresentRecordShouldFormatFilledRecordForDisplay() {
+        // Given
+        let spy = MainDisplayLogicSpy()
+        sut.viewController = spy
+        let record = Record(date: Date(from: "2018-05-07")!, full: 2, express: 1)
+        let response = Main.FetchRecords.Response(record: record)
+        
+        // When
+        sut.presentRecord(response: response)
+        
+        // Then
+        let viewModel = spy.main_fetchRecords_viewModel!
+        XCTAssertEqual(viewModel.date, "Mon, May 7", "Presentig record should properly format the date")
         XCTAssertEqual(viewModel.full, "Full x 2", "Presentig record should properly format the full counter")
         XCTAssertEqual(viewModel.express, "Express x 1", "Presentig record should properly format the express counter")
     }
@@ -72,7 +89,8 @@ class MainPresenterTests: XCTestCase {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
-        let response = Main.FetchRecords.Response()
+        let record = Record(date: Date(), full: 0, express: 0)
+        let response = Main.FetchRecords.Response(record: record)
 
         // When
         sut.presentRecord(response: response)
