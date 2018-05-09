@@ -39,9 +39,11 @@ class MainInteractorTests: XCTestCase {
 
     class MainPresentationLogicSpy: MainPresentationLogic {
         var presentRecordCalled = false
+        var main_fetchRecords_response: Main.FetchRecords.Response!
 
         func presentRecord(response: Main.FetchRecords.Response) {
             presentRecordCalled = true
+            main_fetchRecords_response = response
         }
     }
     
@@ -50,26 +52,40 @@ class MainInteractorTests: XCTestCase {
         
         override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
             fetchRecordsCalled = true
-            let record1 = Record(date: Date(from: "2018-01-01")!, full: 1, express: 1)
-            completionHandler([record1])
+            completionHandler([Record]())
         }
     }
 
     // MARK: - Tests
 
-    func testFetchRecords() {
+    func testFetchRecordsAsksWorkerToFetchRecords() {
+        // Given
+        let spy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        sut.worker = spy
+        let request = Main.FetchRecords.Request()
+        
+        // When
+        sut.fetchRecords(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.fetchRecordsCalled, "fetchRecords(request:) should ask the worker to fetch the records")
+    }
+    
+    func testFetchRecordsAsksPresenterToFormatEmptyRecordWhenNoRecords() {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
         let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
         sut.worker = workerSpy
         let request = Main.FetchRecords.Request()
-
+        
         // When
         sut.fetchRecords(request: request)
-
+        
         // Then
-        XCTAssertTrue(workerSpy.fetchRecordsCalled, "fetchRecords(request:) should ask the worker to fetch the records")
         XCTAssertTrue(presenterSpy.presentRecordCalled, "fetchRecords(request:) should ask the presenter to format the record")
+        let record = presenterSpy.main_fetchRecords_response.record
+        XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
     }
+
 }

@@ -107,13 +107,13 @@
 		A0C077E020907C1F001A5FB0 /* SHA */ = {
 			isa = PBXGroup;
 			children = (
+				A0543D6F20A2C9B100FF88B4 /* Extensions.swift */,
 				A0543D6C20A2C4EF00FF88B4 /* Models */,
 				A0C0780120907CAD001A5FB0 /* Scenes */,
 				A0C077E120907C1F001A5FB0 /* AppDelegate.swift */,
 				A0C077E820907C24001A5FB0 /* Assets.xcassets */,
 				A0C077EA20907C24001A5FB0 /* LaunchScreen.storyboard */,
 				A0C077ED20907C24001A5FB0 /* Info.plist */,
-				A0543D6F20A2C9B100FF88B4 /* Extensions.swift */,
 			);
 			path = SHA;
 			sourceTree = "<group>";

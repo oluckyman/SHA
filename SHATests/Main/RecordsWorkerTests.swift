@@ -43,7 +43,7 @@ class RecordsWorkerTests: XCTestCase {
         override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
             fetchRecordsCalled = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                completionHandler([Record]())
+                completionHandler([Record(), Record()])
             }
         }
     }
@@ -57,7 +57,9 @@ class RecordsWorkerTests: XCTestCase {
 
         // When
         sut.fetchRecords { records in
-            expectRecords.fulfill()
+            if records.count == 2 {
+                expectRecords.fulfill()
+            }
         }
 
         // Then
