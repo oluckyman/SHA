@@ -86,6 +86,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A0A5215A20A41B810010D8C5 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A0543D6F20A2C9B100FF88B4 /* Extensions.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		A0C077D520907C1F001A5FB0 = {
 			isa = PBXGroup;
 			children = (
@@ -107,7 +115,7 @@
 		A0C077E020907C1F001A5FB0 /* SHA */ = {
 			isa = PBXGroup;
 			children = (
-				A0543D6F20A2C9B100FF88B4 /* Extensions.swift */,
+				A0A5215A20A41B810010D8C5 /* Shared */,
 				A0543D6C20A2C4EF00FF88B4 /* Models */,
 				A0C0780120907CAD001A5FB0 /* Scenes */,
 				A0C077E120907C1F001A5FB0 /* AppDelegate.swift */,

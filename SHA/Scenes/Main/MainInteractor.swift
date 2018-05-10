@@ -14,7 +14,7 @@ import UIKit
 
 
 protocol MainBusinessLogic {
-    func fetchRecords(request: Main.FetchRecords.Request)
+    func fetchRecord(request: Main.FetchRecord.Request)
 }
 
 protocol MainDataStore {
@@ -27,12 +27,12 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     
     // MARK: - Records
     
-    func fetchRecords(request: Main.FetchRecords.Request) {
+    func fetchRecord(request: Main.FetchRecord.Request) {
         worker.fetchRecords { records in
             // TODO: store fetched records into internal data store for later access
             // TODO: select currentDate record and put it into repsonse
             let currentRecord = Record()
-            let response = Main.FetchRecords.Response(record: currentRecord)
+            let response = Main.FetchRecord.Response(record: currentRecord)
             self.presenter?.presentRecord(response: response)
         }
     }

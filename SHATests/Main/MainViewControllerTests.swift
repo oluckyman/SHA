@@ -48,16 +48,16 @@ class MainViewControllerTests: XCTestCase {
     // MARK: - Test doubles
 
     class MainBusinessLogicSpy: MainBusinessLogic {
-        var fetchRecordsCalled = false
+        var fetchRecordCalled = false
 
-        func fetchRecords(request: Main.FetchRecords.Request) {
-            fetchRecordsCalled = true
+        func fetchRecord(request: Main.FetchRecord.Request) {
+            fetchRecordCalled = true
         }
     }
 
     // MARK: - Tests
 
-    func testShouldFetchRecordsWhenViewIsLoaded() {
+    func testShouldFetchRecordWhenViewIsLoaded() {
         // Given
         let spy = MainBusinessLogicSpy()
         sut.interactor = spy
@@ -66,13 +66,13 @@ class MainViewControllerTests: XCTestCase {
         loadView()
 
         // Then
-        XCTAssertTrue(spy.fetchRecordsCalled, "viewDidLoad() should ask the interactor to fetch records")
+        XCTAssertTrue(spy.fetchRecordCalled, "viewDidLoad() should ask the interactor to fetch records")
     }
 
     func testDisplayRecord() {
         // Given
         let expected = (date: "Mon, May 7th", full: "Full x 2", express: "Express x 1")
-        let viewModel = Main.FetchRecords.ViewModel(date: expected.date, full: expected.full, express: expected.express)
+        let viewModel = Main.FetchRecord.ViewModel(date: expected.date, full: expected.full, express: expected.express)
 
         // When
         loadView()

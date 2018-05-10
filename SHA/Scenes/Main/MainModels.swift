@@ -15,7 +15,7 @@ import UIKit
 enum Main {
     // MARK: - Use cases
 
-    enum FetchRecords {
+    enum FetchRecord {
         struct Request { }
         struct Response {
             var record: Record

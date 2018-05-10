@@ -39,11 +39,11 @@ class MainInteractorTests: XCTestCase {
 
     class MainPresentationLogicSpy: MainPresentationLogic {
         var presentRecordCalled = false
-        var main_fetchRecords_response: Main.FetchRecords.Response!
+        var main_fetchRecord_response: Main.FetchRecord.Response!
 
-        func presentRecord(response: Main.FetchRecords.Response) {
+        func presentRecord(response: Main.FetchRecord.Response) {
             presentRecordCalled = true
-            main_fetchRecords_response = response
+            main_fetchRecord_response = response
         }
     }
     
@@ -58,33 +58,33 @@ class MainInteractorTests: XCTestCase {
 
     // MARK: - Tests
 
-    func testFetchRecordsAsksWorkerToFetchRecords() {
+    func testFetchRecordAsksWorkerToFetchRecords() {
         // Given
         let spy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
         sut.worker = spy
-        let request = Main.FetchRecords.Request()
+        let request = Main.FetchRecord.Request()
         
         // When
-        sut.fetchRecords(request: request)
+        sut.fetchRecord(request: request)
         
         // Then
-        XCTAssertTrue(spy.fetchRecordsCalled, "fetchRecords(request:) should ask the worker to fetch the records")
+        XCTAssertTrue(spy.fetchRecordsCalled, "fetchRecord(request:) should ask the worker to fetch the records")
     }
     
-    func testFetchRecordsAsksPresenterToFormatEmptyRecordWhenNoRecords() {
+    func testFetchRecordAsksPresenterToFormatEmptyRecordWhenNoRecords() {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
         let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
         sut.worker = workerSpy
-        let request = Main.FetchRecords.Request()
+        let request = Main.FetchRecord.Request()
         
         // When
-        sut.fetchRecords(request: request)
+        sut.fetchRecord(request: request)
         
         // Then
-        XCTAssertTrue(presenterSpy.presentRecordCalled, "fetchRecords(request:) should ask the presenter to format the record")
-        let record = presenterSpy.main_fetchRecords_response.record
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "fetchRecord(request:) should ask the presenter to format the record")
+        let record = presenterSpy.main_fetchRecord_response.record
         XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
     }
 

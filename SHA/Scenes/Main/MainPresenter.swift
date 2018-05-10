@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MainPresentationLogic {
-    func presentRecord(response: Main.FetchRecords.Response)
+    func presentRecord(response: Main.FetchRecord.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
@@ -27,7 +27,7 @@ class MainPresenter: MainPresentationLogic {
 
     // MARK: - Record
 
-    func presentRecord(response: Main.FetchRecords.Response) {
+    func presentRecord(response: Main.FetchRecord.Response) {
         let record = response.record
         let date = record.date
         let full = record.full
@@ -36,7 +36,7 @@ class MainPresenter: MainPresentationLogic {
         let displayFull = full == 0 ? "Full" : "Full x \(full)"
         let displayExpress = express == 0 ? "Express" : "Express x \(express)"
         
-        let viewModel = Main.FetchRecords.ViewModel(date: displayDate, full: displayFull, express: displayExpress)
+        let viewModel = Main.FetchRecord.ViewModel(date: displayDate, full: displayFull, express: displayExpress)
         viewController?.displayRecord(viewModel: viewModel)
     }
 }

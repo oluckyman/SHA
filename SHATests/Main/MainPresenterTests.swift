@@ -39,9 +39,9 @@ class MainPresenterTests: XCTestCase {
 
     class MainDisplayLogicSpy: MainDisplayLogic {
         var displayRecordCalled = false
-        var main_fetchRecords_viewModel: Main.FetchRecords.ViewModel!
+        var main_fetchRecords_viewModel: Main.FetchRecord.ViewModel!
 
-        func displayRecord(viewModel: Main.FetchRecords.ViewModel) {
+        func displayRecord(viewModel: Main.FetchRecord.ViewModel) {
             displayRecordCalled = true
             // TODO test fields of the view model as described here
             // https://clean-swift.com/clean-swift-tdd-part-4-presenter/
@@ -56,7 +56,7 @@ class MainPresenterTests: XCTestCase {
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
         let record = Record(date: Date(from: "2018-05-08")!, full: 0, express: 0)
-        let response = Main.FetchRecords.Response(record: record)
+        let response = Main.FetchRecord.Response(record: record)
         
         // When
         sut.presentRecord(response: response)
@@ -73,7 +73,7 @@ class MainPresenterTests: XCTestCase {
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
         let record = Record(date: Date(from: "2018-05-07")!, full: 2, express: 1)
-        let response = Main.FetchRecords.Response(record: record)
+        let response = Main.FetchRecord.Response(record: record)
         
         // When
         sut.presentRecord(response: response)
@@ -90,7 +90,7 @@ class MainPresenterTests: XCTestCase {
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
         let record = Record(date: Date(), full: 0, express: 0)
-        let response = Main.FetchRecords.Response(record: record)
+        let response = Main.FetchRecord.Response(record: record)
 
         // When
         sut.presentRecord(response: response)

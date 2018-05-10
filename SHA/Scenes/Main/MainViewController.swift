@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MainDisplayLogic: class {
-    func displayRecord(viewModel: Main.FetchRecords.ViewModel)
+    func displayRecord(viewModel: Main.FetchRecord.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -62,7 +62,7 @@ class MainViewController: UIViewController, MainDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchRecords()
+        fetchRecord()
     }
 
     // MARK: - Record
@@ -71,12 +71,12 @@ class MainViewController: UIViewController, MainDisplayLogic {
     @IBOutlet weak var fullButton: UIButton!
     @IBOutlet weak var expressButton: UIButton!
     
-    func fetchRecords() {
-        let request = Main.FetchRecords.Request()
-        interactor?.fetchRecords(request: request)
+    func fetchRecord() {
+        let request = Main.FetchRecord.Request()
+        interactor?.fetchRecord(request: request)
     }
 
-    func displayRecord(viewModel: Main.FetchRecords.ViewModel) {
+    func displayRecord(viewModel: Main.FetchRecord.ViewModel) {
         dateLabel.text = viewModel.date
         fullButton.setTitle(viewModel.full, for: .normal)
         expressButton.setTitle(viewModel.express, for: .normal)
