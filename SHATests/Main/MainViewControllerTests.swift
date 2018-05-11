@@ -71,7 +71,7 @@ class MainViewControllerTests: XCTestCase {
 
     func testDisplayRecord() {
         // Given
-        let expected = (date: "Mon, May 7th", full: "Full x 2", express: "Express x 1")
+        let expected = (date: "Mon, May 7", full: "Full x 2", express: "Express x 1")
         let viewModel = Main.FetchRecord.ViewModel(date: expected.date, full: expected.full, express: expected.express)
 
         // When
