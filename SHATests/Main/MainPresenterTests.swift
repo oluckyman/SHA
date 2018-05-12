@@ -51,6 +51,15 @@ class MainPresenterTests: XCTestCase {
 
     // MARK: - Tests
 
+    private func getDateString(date: Date) -> String {
+        let dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.setLocalizedDateFormatFromTemplate("EdMMM")
+            return dateFormatter
+        }()
+        return dateFormatter.string(from: date)
+    }
+    
     func testPresentRecordShouldFormatEmptyRecordForDisplay() {
         // Given
         let spy = MainDisplayLogicSpy()
@@ -61,9 +70,11 @@ class MainPresenterTests: XCTestCase {
         // When
         sut.presentRecord(response: response)
         
+
+        
         // Then
         let viewModel = spy.main_fetchRecords_viewModel!
-        XCTAssertEqual(viewModel.date, "Tue, May 8", "Presentig record should properly format the date")
+        XCTAssertEqual(viewModel.date, getDateString(date: record.date), "Presentig record should properly format the date")
         XCTAssertEqual(viewModel.full, "Full", "Presentig record should properly format the full counter")
         XCTAssertEqual(viewModel.express, "Express", "Presentig record should properly format the express counter")
     }
@@ -80,7 +91,7 @@ class MainPresenterTests: XCTestCase {
         
         // Then
         let viewModel = spy.main_fetchRecords_viewModel!
-        XCTAssertEqual(viewModel.date, "Mon, May 7", "Presentig record should properly format the date")
+        XCTAssertEqual(viewModel.date, getDateString(date: record.date), "Presentig record should properly format the date")
         XCTAssertEqual(viewModel.full, "Full x 2", "Presentig record should properly format the full counter")
         XCTAssertEqual(viewModel.express, "Express x 1", "Presentig record should properly format the express counter")
     }
