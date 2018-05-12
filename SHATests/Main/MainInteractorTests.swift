@@ -92,6 +92,7 @@ class MainInteractorTests: XCTestCase {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
+        sut.currentRecord = Record(date: Date(), full: 42, express: 0)
         let request = Main.IncrementFull.Request()
         
         // When
@@ -100,7 +101,7 @@ class MainInteractorTests: XCTestCase {
         // Then
         XCTAssertTrue(presenterSpy.presentRecordCalled, "incrementFull(request:) should ask the presenter to format a record")
         let record = presenterSpy.main_fetchRecord_response?.record
-        XCTAssertEqual(record, Record(date: Date(), full: 1, express: 0))
+        XCTAssertEqual(record, Record(date: Date(), full: 42 + 1, express: 0))
     }
 
 }

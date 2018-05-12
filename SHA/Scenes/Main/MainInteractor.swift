@@ -19,10 +19,19 @@ protocol MainBusinessLogic {
 }
 
 protocol MainDataStore {
-    //var name: String { get set }
+    var records: [Record] { get }
+    var currentRecord: Record! { get }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
+    var records: [Record] = [] {
+        didSet {
+            currentRecord = Record()
+        }
+    }
+    
+    var currentRecord: Record!
+    
     var presenter: MainPresentationLogic?
     var worker = RecordsWorker(recordsStore: RecordsMemStore())
     
@@ -30,10 +39,8 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     
     func fetchRecord(request: Main.FetchRecord.Request) {
         worker.fetchRecords { records in
-            // TODO: store fetched records into internal data store for later access
-            // TODO: select currentDate record and put it into repsonse
-            let currentRecord = Record()
-            let response = Main.FetchRecord.Response(record: currentRecord)
+            self.records = records
+            let response = Main.FetchRecord.Response(record: self.currentRecord)
             self.presenter?.presentRecord(response: response)
         }
     }
@@ -41,7 +48,6 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     // MARK: - Counters
     
     func incrementFull(request: Main.IncrementFull.Request) {
-        var currentRecord = Record()
         currentRecord.full += 1
         let response = Main.FetchRecord.Response(record: currentRecord)
         presenter?.presentRecord(response: response)
