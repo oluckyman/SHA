@@ -104,4 +104,19 @@ class MainInteractorTests: XCTestCase {
         XCTAssertEqual(record, Record(date: Date(), full: 42 + 1, express: 0))
     }
 
+    func testResetFullAsksPresenterToFormatRecord() {
+        // Given
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        sut.currentRecord = Record(date: Date(), full: 42, express: 0)
+        let request = Main.ResetFull.Request()
+        
+        // When
+        sut.resetFull(request: request)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "resetFull(request:) should ask the presenter to format a record")
+        let record = presenterSpy.main_fetchRecord_response?.record
+        XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
+    }
 }

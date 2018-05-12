@@ -21,6 +21,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ng-VF-q3C" customClass="BorderedButton" customModule="SHA" customModuleProvider="target">
                                 <rect key="frame" x="16" y="319" width="343" height="160"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="36"/>
                                 <state key="normal" title="Full × 5"/>
                                 <userDefinedRuntimeAttributes>
@@ -36,6 +37,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="fullButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b0B-kU-HPW"/>
+                                    <outletCollection property="gestureRecognizers" destination="x5Q-JM-2oa" appends="YES" id="rJV-zv-vJC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0o-aP-Ria" customClass="BorderedButton" customModule="SHA" customModuleProvider="target">
@@ -85,6 +87,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="x5Q-JM-2oa">
+                    <connections>
+                        <action selector="fullButtonLongPressed:" destination="BYZ-38-t0r" id="3zt-uc-9p5"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>

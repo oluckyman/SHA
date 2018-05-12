@@ -16,6 +16,7 @@ import UIKit
 protocol MainBusinessLogic {
     func fetchRecord(request: Main.FetchRecord.Request)
     func incrementFull(request: Main.IncrementFull.Request)
+    func resetFull(request: Main.ResetFull.Request)
 }
 
 protocol MainDataStore {
@@ -24,16 +25,15 @@ protocol MainDataStore {
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
+    var presenter: MainPresentationLogic?
+    var worker = RecordsWorker(recordsStore: RecordsMemStore())
+    
     var records: [Record] = [] {
         didSet {
             currentRecord = Record()
         }
     }
-    
     var currentRecord: Record!
-    
-    var presenter: MainPresentationLogic?
-    var worker = RecordsWorker(recordsStore: RecordsMemStore())
     
     // MARK: - Records
     
@@ -52,4 +52,11 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
         let response = Main.FetchRecord.Response(record: currentRecord)
         presenter?.presentRecord(response: response)
     }
+    
+    func resetFull(request: Main.ResetFull.Request) {
+        currentRecord.full = 0
+        let response = Main.FetchRecord.Response(record: currentRecord)
+        presenter?.presentRecord(response: response)
+    }
+    
 }

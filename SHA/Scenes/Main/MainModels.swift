@@ -30,4 +30,8 @@ enum Main {
     enum IncrementFull {
         struct Request {}
     }
+    
+    enum ResetFull {
+        struct Request {}
+    }
 }
