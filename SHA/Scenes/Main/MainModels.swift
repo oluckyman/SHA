@@ -26,4 +26,8 @@ enum Main {
             var express: String
         }
     }
+    
+    enum IncrementFull {
+        struct Request {}
+    }
 }

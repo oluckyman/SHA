@@ -53,6 +53,8 @@ class MainViewControllerTests: XCTestCase {
         func fetchRecord(request: Main.FetchRecord.Request) {
             fetchRecordCalled = true
         }
+        
+        func incrementFull(request: Main.IncrementFull.Request) {}
     }
 
     // MARK: - Tests

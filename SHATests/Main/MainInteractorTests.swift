@@ -39,7 +39,7 @@ class MainInteractorTests: XCTestCase {
 
     class MainPresentationLogicSpy: MainPresentationLogic {
         var presentRecordCalled = false
-        var main_fetchRecord_response: Main.FetchRecord.Response!
+        var main_fetchRecord_response: Main.FetchRecord.Response?
 
         func presentRecord(response: Main.FetchRecord.Response) {
             presentRecordCalled = true
@@ -84,8 +84,23 @@ class MainInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(presenterSpy.presentRecordCalled, "fetchRecord(request:) should ask the presenter to format the record")
-        let record = presenterSpy.main_fetchRecord_response.record
+        let record = presenterSpy.main_fetchRecord_response?.record
         XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
+    }
+    
+    func testIncrementFullAsksPresenterToFormatRecord() {
+        // Given
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        let request = Main.IncrementFull.Request()
+        
+        // When
+        sut.incrementFull(request: request)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "incrementFull(request:) should ask the presenter to format a record")
+        let record = presenterSpy.main_fetchRecord_response?.record
+        XCTAssertEqual(record, Record(date: Date(), full: 1, express: 0))
     }
 
 }

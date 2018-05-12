@@ -15,6 +15,7 @@ import UIKit
 
 protocol MainBusinessLogic {
     func fetchRecord(request: Main.FetchRecord.Request)
+    func incrementFull(request: Main.IncrementFull.Request)
 }
 
 protocol MainDataStore {
@@ -35,5 +36,14 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
             let response = Main.FetchRecord.Response(record: currentRecord)
             self.presenter?.presentRecord(response: response)
         }
+    }
+
+    // MARK: - Counters
+    
+    func incrementFull(request: Main.IncrementFull.Request) {
+        var currentRecord = Record()
+        currentRecord.full += 1
+        let response = Main.FetchRecord.Response(record: currentRecord)
+        presenter?.presentRecord(response: response)
     }
 }

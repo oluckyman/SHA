@@ -81,4 +81,16 @@ class MainViewController: UIViewController, MainDisplayLogic {
         fullButton.setTitle(viewModel.full, for: .normal)
         expressButton.setTitle(viewModel.express, for: .normal)
     }
+    
+    // MARK: - Counters
+    
+    @IBAction func fullButtonPressed(_ sender: Any) {
+        incrementFull()
+    }
+    
+    func incrementFull() {
+        let request = Main.IncrementFull.Request()
+        interactor?.incrementFull(request: request)
+    }
+    
 }
