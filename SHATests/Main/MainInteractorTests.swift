@@ -120,6 +120,23 @@ class MainInteractorTests: XCTestCase {
     }
     
     // should set current record to the record from records with current date
+    func testFetchRecordSetsCurrentRecordToTodayDateByDefault() {
+        // Given
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        workerSpy.fetchResultRecords = [
+            Record(date: Date(from: "2018-01-01")!, full: 1, express: 1),
+            Record(date: Date(), full: 42, express: 42), // <-- today
+            Record(date: Date(from: "2022-11-11")!, full: 11, express: 11)
+        ]
+        sut.worker = workerSpy
+        let request = Main.FetchRecord.Request()
+        
+        // When
+        sut.fetchRecord(request: request)
+        
+        // Then
+        XCTAssertEqual(sut.currentRecord, workerSpy.fetchResultRecords[1])
+    }
     
     func testIncrementFullAsksPresenterToFormatRecord() {
         // Given

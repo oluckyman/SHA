@@ -31,7 +31,10 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     
     var records: [Record] = [] {
         didSet {
-            currentRecord = Record()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let today = dateFormatter.string(from: Date())
+            currentRecord = records.first(where: { dateFormatter.string(from: $0.date) == today })
         }
     }
     var currentRecord: Record!
