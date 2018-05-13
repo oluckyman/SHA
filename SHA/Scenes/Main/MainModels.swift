@@ -34,4 +34,8 @@ enum Main {
     enum ResetFull {
         struct Request {}
     }
+    
+    enum NavigateBack {
+        struct Request {}
+    }
 }

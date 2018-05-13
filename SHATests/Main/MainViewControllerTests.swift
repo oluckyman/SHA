@@ -56,6 +56,7 @@ class MainViewControllerTests: XCTestCase {
         
         func incrementFull(request: Main.IncrementFull.Request) {}
         func resetFull(request: Main.ResetFull.Request) {}
+        func navigateBack(request: Main.NavigateBack.Request) {}
     }
 
     // MARK: - Tests

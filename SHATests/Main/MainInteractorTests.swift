@@ -119,4 +119,21 @@ class MainInteractorTests: XCTestCase {
         let record = presenterSpy.main_fetchRecord_response?.record
         XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
     }
+
+    func testNavigateBackAsksPresenterToFormatRecord() {
+        // Given
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        sut.currentRecord = Record(date: Date(from: "2018-01-01")!, full: 0, express: 0)
+        let request = Main.NavigateBack.Request()
+        
+        // When
+        sut.navigateBack(request: request)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "navigateBack(request:) should ask the presenter to format a record")
+        let record = presenterSpy.main_fetchRecord_response?.record
+        XCTAssertEqual(record, Record(date: Date(from: "2017-12-31")!, full: 0, express: 0))
+    }
+
 }

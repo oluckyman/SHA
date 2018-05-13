@@ -17,6 +17,7 @@ protocol MainBusinessLogic {
     func fetchRecord(request: Main.FetchRecord.Request)
     func incrementFull(request: Main.IncrementFull.Request)
     func resetFull(request: Main.ResetFull.Request)
+    func navigateBack(request: Main.NavigateBack.Request)
 }
 
 protocol MainDataStore {
@@ -57,6 +58,19 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
         currentRecord.full = 0
         let response = Main.FetchRecord.Response(record: currentRecord)
         presenter?.presentRecord(response: response)
+    }
+    
+    // MARK: - Navigation
+    
+    func navigateBack(request: Main.NavigateBack.Request) {
+        currentRecord.date = dayBefore(currentRecord.date)
+        let response = Main.FetchRecord.Response(record: currentRecord)
+        presenter?.presentRecord(response: response)
+    }
+    
+    private func dayBefore(_ date: Date) -> Date {
+        let oneDayInterval = 60 * 60 * 24 * 1.0
+        return Date(timeInterval: -oneDayInterval, since: date)
     }
     
 }

@@ -104,4 +104,15 @@ class MainViewController: UIViewController, MainDisplayLogic {
         interactor?.resetFull(request: request)
     }
     
+    // MARK: - Navigation
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        navigateBack()
+    }
+    
+    func navigateBack() {
+        let request = Main.NavigateBack.Request()
+        interactor?.navigateBack(request: request)
+    }
+    
 }
