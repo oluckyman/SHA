@@ -40,7 +40,7 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     
     func fetchRecord(request: Main.FetchRecord.Request) {
         worker.fetchRecords { records in
-            self.records = records
+            self.records = records.count > 0 ? records : [Record()]
             let response = Main.FetchRecord.Response(record: self.currentRecord)
             self.presenter?.presentRecord(response: response)
         }

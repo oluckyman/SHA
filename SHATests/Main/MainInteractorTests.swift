@@ -106,6 +106,19 @@ class MainInteractorTests: XCTestCase {
     }
     
     // should add empty today record when there are no records
+    func testFetchRecordAddsTodayRecordIfNoRecords() {
+        // Given
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        sut.worker = workerSpy
+        let request = Main.FetchRecord.Request()
+        
+        // When
+        sut.fetchRecord(request: request)
+        
+        // Then
+        XCTAssertEqual(sut.records, [Record()])
+    }
+    
     // should set current record to the record from records with current date
     
     func testIncrementFullAsksPresenterToFormatRecord() {
