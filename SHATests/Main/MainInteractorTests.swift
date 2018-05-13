@@ -49,10 +49,11 @@ class MainInteractorTests: XCTestCase {
     
     class RecordsWorkerSpy: RecordsWorker {
         var fetchRecordsCalled = false
+        var fetchResultRecords: [Record] = []
         
         override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
             fetchRecordsCalled = true
-            completionHandler([Record]())
+            completionHandler(fetchResultRecords)
         }
     }
 
@@ -87,6 +88,25 @@ class MainInteractorTests: XCTestCase {
         let record = presenterSpy.main_fetchRecord_response?.record
         XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
     }
+    
+    func testFetchRecordPopulatesRecords() {
+        // Given
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        workerSpy.fetchResultRecords = [
+            Record(), Record(), Record()
+        ]
+        sut.worker = workerSpy
+        let request = Main.FetchRecord.Request()
+        
+        // When
+        sut.fetchRecord(request: request)
+        
+        // Then
+        XCTAssertEqual(sut.records, workerSpy.fetchResultRecords)
+    }
+    
+    // should add empty today record when there are no records
+    // should set current record to the record from records with current date
     
     func testIncrementFullAsksPresenterToFormatRecord() {
         // Given
