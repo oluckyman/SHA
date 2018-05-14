@@ -88,15 +88,15 @@ class MainViewController: UIViewController, MainDisplayLogic {
         incrementFull()
     }
     
+    func incrementFull() {
+        let request = Main.IncrementFull.Request()
+        interactor?.incrementFull(request: request)
+    }
+    
     @IBAction func fullButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             resetFull()
         }
-    }
-    
-    func incrementFull() {
-        let request = Main.IncrementFull.Request()
-        interactor?.incrementFull(request: request)
     }
     
     func resetFull() {

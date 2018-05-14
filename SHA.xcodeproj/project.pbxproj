@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A02D0D9820A97E31004EEC63 /* RecordDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D0D9720A97E31004EEC63 /* RecordDate.swift */; };
 		A0543D6E20A2C50300FF88B4 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0543D6D20A2C50300FF88B4 /* Record.swift */; };
 		A0543D7020A2C9B100FF88B4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0543D6F20A2C9B100FF88B4 /* Date.swift */; };
 		A05C291920A5A482009853DB /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05C291820A5A482009853DB /* UIExtensions.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A02D0D9720A97E31004EEC63 /* RecordDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDate.swift; sourceTree = "<group>"; };
 		A0543D6D20A2C50300FF88B4 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		A0543D6F20A2C9B100FF88B4 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A05C291820A5A482009853DB /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				A0543D6D20A2C50300FF88B4 /* Record.swift */,
+				A02D0D9720A97E31004EEC63 /* RecordDate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				A0C0780B20908F12001A5FB0 /* MainRouter.swift in Sources */,
 				A0543D6E20A2C50300FF88B4 /* Record.swift in Sources */,
 				A0C0780C20908F12001A5FB0 /* MainModels.swift in Sources */,
+				A02D0D9820A97E31004EEC63 /* RecordDate.swift in Sources */,
 				A0C0780920908F12001A5FB0 /* MainPresenter.swift in Sources */,
 				A05C291920A5A482009853DB /* UIExtensions.swift in Sources */,
 				A0543D7020A2C9B100FF88B4 /* Date.swift in Sources */,

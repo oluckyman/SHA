@@ -39,32 +39,55 @@ class RecordsWorkerTests: XCTestCase {
     
     class RecordsMemStoreSpy : RecordsMemStore {
         var fetchRecordsCalled = false
+        var recordsInStore: [Record] = []
         
         override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
             fetchRecordsCalled = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                completionHandler([])
+                completionHandler(self.recordsInStore)
             }
         }
     }
 
     // MARK: - Tests
 
-    func testFetchRecord() {
+    func testFetchRecordReturnsEmptyTodayRecordIfNoRecords() {
         // Given
         let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
         let expectRecord = expectation(description: "Wait for fetched record")
 
         // When
-        sut.fetchRecord(for: Date(), completionHandler: { record in
+        sut.fetchRecord(for: RecordDate(), completionHandler: { record in
             expectRecord.fulfill()
+            XCTAssertEqual(record, Record(), "Worker returns today's empty record when there is no records in the store")
         })
 
         // Then
         XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecord(for date:) should ask the data store to fetch records")
         wait(for: [expectRecord], timeout: 0.6)
     }
-    // if no records: fetchRecord should return empty today record
+    
+    func testFetchRecordReturnsTodayRecordFromRecords() {
+        // Given
+        let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
+        storeSpy.recordsInStore = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
+            Record(date: RecordDate(), full: 42, express: 42),
+            Record(date: RecordDate(from: "2020-12-12")!, full: 12, express: 12)
+        ]
+        let expectRecord = expectation(description: "Wait for fetched record")
+        
+        // When
+        sut.fetchRecord(for: RecordDate(), completionHandler: { record in
+            expectRecord.fulfill()
+            XCTAssertEqual(record, Record(date: RecordDate(), full: 42, express: 42), "Worker returns today's record when from records store")
+        })
+        
+        // Then
+        XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecord(for date:) should ask the data store to fetch records")
+        wait(for: [expectRecord], timeout: 0.6)
+    }
+
     // if there are records: fetchRecord should return today record from these records
     // if there are records expcept today, fetch record should return empty todays record
 }
