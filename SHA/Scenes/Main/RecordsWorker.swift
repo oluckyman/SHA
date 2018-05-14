@@ -25,7 +25,7 @@ class RecordsWorker {
     
     func fetchRecord(for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
         recordsStore.fetchRecords { records in
-            let record = records.first(where: { $0.date == date }) ?? Record()
+            let record = records.first(where: { $0.date == date }) ?? Record(date: date, full: 0, express: 0)
             completionHandler(record)
         }
     }
