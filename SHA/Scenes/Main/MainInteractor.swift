@@ -21,6 +21,7 @@ protocol MainBusinessLogic {
 }
 
 protocol MainDataStore {
+    var currentDate: Date { get }
     var records: [Record] { get }
     var currentRecord: Record! { get }
 }
@@ -28,6 +29,8 @@ protocol MainDataStore {
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
     var worker = RecordsWorker(recordsStore: RecordsMemStore())
+    
+    var currentDate = Date()
     
     var records: [Record] = [] {
         didSet {
@@ -42,16 +45,17 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     // MARK: - Records
     
     func fetchRecord(request: Main.FetchRecord.Request) {
-        worker.fetchRecords { records in
-            self.records = records.count > 0 ? records : [Record()]
-            let response = Main.FetchRecord.Response(record: self.currentRecord)
+        worker.fetchRecord(for: currentDate, completionHandler: { record in
+            let response = Main.FetchRecord.Response(record: record)
             self.presenter?.presentRecord(response: response)
-        }
+        })
     }
 
     // MARK: - Counters
     
     func incrementFull(request: Main.IncrementFull.Request) {
+        // TODO: as worker fot increment with current date and in completion handler call presenter
+        // rewrite tests accordingly
         currentRecord.full += 1
         let response = Main.FetchRecord.Response(record: currentRecord)
         presenter?.presentRecord(response: response)

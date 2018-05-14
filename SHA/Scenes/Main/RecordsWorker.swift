@@ -23,9 +23,10 @@ class RecordsWorker {
         self.recordsStore = recordsStore
     }
     
-    func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
+    func fetchRecord(for date: Date, completionHandler: @escaping (Record) -> Void) {
         recordsStore.fetchRecords { records in
-            completionHandler(records)
+            let record = Record()
+            completionHandler(record)
         }
     }
 }

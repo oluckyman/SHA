@@ -43,27 +43,28 @@ class RecordsWorkerTests: XCTestCase {
         override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
             fetchRecordsCalled = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                completionHandler([Record(), Record()])
+                completionHandler([])
             }
         }
     }
 
     // MARK: - Tests
 
-    func testFetchRecords() {
+    func testFetchRecord() {
         // Given
         let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
-        let expectRecords = expectation(description: "Wait for fetched records")
+        let expectRecord = expectation(description: "Wait for fetched record")
 
         // When
-        sut.fetchRecords { records in
-            if records.count == 2 {
-                expectRecords.fulfill()
-            }
-        }
+        sut.fetchRecord(for: Date(), completionHandler: { record in
+            expectRecord.fulfill()
+        })
 
         // Then
-        XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecords() should ask the data store for a list of records")
-        wait(for: [expectRecords], timeout: 0.6)
+        XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecord(for date:) should ask the data store to fetch records")
+        wait(for: [expectRecord], timeout: 0.6)
     }
+    // if no records: fetchRecord should return empty today record
+    // if there are records: fetchRecord should return today record from these records
+    // if there are records expcept today, fetch record should return empty todays record
 }
