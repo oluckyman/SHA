@@ -30,9 +30,9 @@ class RecordsWorker {
         }
     }
     
-//    func increment(counter: Record.Counters, for date: Date, completionHandler: @escaping (Record) -> Void) {
-//        
-//    }
+    func increment(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+        
+    }
 }
 
 

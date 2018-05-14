@@ -54,11 +54,10 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     // MARK: - Counters
     
     func incrementFull(request: Main.IncrementFull.Request) {
-        // TODO: as worker fot increment with current date and in completion handler call presenter
-        // rewrite tests accordingly
-//        currentRecord.full += 1
-//        let response = Main.FetchRecord.Response(record: currentRecord)
-//        presenter?.presentRecord(response: response)
+        worker.increment(counter: .full, for: currentDate) { record in
+            let response = Main.FetchRecord.Response(record: record)
+            self.presenter?.presentRecord(response: response)
+        }
     }
     
     func resetFull(request: Main.ResetFull.Request) {

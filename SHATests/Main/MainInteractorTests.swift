@@ -49,10 +49,15 @@ class MainInteractorTests: XCTestCase {
     
     class RecordsWorkerSpy: RecordsWorker {
         var fetchRecordCalled = false
-
+        var incrementCalled = false
+        
         override func fetchRecord(for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             fetchRecordCalled = true
             completionHandler(Record())
+        }
+        
+        override func increment(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+            incrementCalled = true
         }
 
     }
@@ -89,62 +94,20 @@ class MainInteractorTests: XCTestCase {
         XCTAssertEqual(record, Record())
     }
     
-//
-//    func testFetchRecordAddsTodayRecordIfNoRecords() {
-//        // Given
-//        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
-//        sut.worker = workerSpy
-//        let request = Main.FetchRecord.Request()
-//
-//        // When
-//        sut.fetchRecord(request: request)
-//
-//        // Then
-//        XCTAssertEqual(sut.records, [Record()])
-//    }
-    
-//    func testFetchRecordAddsTodayRecordIfNoTodayRecord() {
-//        // Given
-//        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
-//        let someRecord = Record(date: Date(from: "2018-01-01")!, full: 1, express: 1)
-//        workerSpy.fetchResultRecords = [someRecord]
-//        sut.worker = workerSpy
-//        let request = Main.FetchRecord.Request()
-//        
-//        // When
-//        sut.fetchRecord(request: request)
-//        
-//        // Then
-//        XCTAssertEqual(sut.records, [someRecord, Record()])
-//    }
-    
-    // should set current record to the record from records with current date
-//    func testFetchRecordSetsCurrentRecordToTodayDateByDefault() {
-//        // Given
-//        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
-//        workerSpy.fetchResultRecords = [
-//            Record(date: Date(from: "2018-01-01")!, full: 1, express: 1),
-//            Record(date: Date(), full: 42, express: 42), // <-- today
-//            Record(date: Date(from: "2022-11-11")!, full: 11, express: 11)
-//        ]
-//        sut.worker = workerSpy
-//        let request = Main.FetchRecord.Request()
-//
-//        // When
-//        sut.fetchRecord(request: request)
-//
-//        // Then
-//        XCTAssertEqual(sut.currentRecord, workerSpy.fetchResultRecords[1])
-//    }
-    
-//    func testIncrementFullAsksWorkerToIncrementFull() {
-//        // Given
-//        let workerSpy = RecordsWorkerSpy()
-//        sut.worker = workerSpy
-//
-//        // When
-//        sut.incrementFull(request: Main.IncrementFull.Request)
-//    }
+    func testIncrementFullAsksWorkerToIncrement() {
+        // Given
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        sut.worker = workerSpy
+
+        // When
+        sut.incrementFull(request: Main.IncrementFull.Request())
+        
+        // TODO: test that it was called with .full and for specific date (set current date in Given)
+        // then in worker test incremnet function that it's really increments
+        
+        // Then
+        XCTAssertTrue(workerSpy.incrementCalled, "incrementFull(request:) should ask worker to increment")
+    }
     
 //    func testIncrementFullAsksPresenterToFormatRecord() {
 //        // Given

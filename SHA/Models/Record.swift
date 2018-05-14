@@ -15,18 +15,14 @@ struct Record: Equatable {
 }
 
 extension Record {
+    enum Counters: String {
+        case full
+        case express
+    }
+    
     init() {
         self.date = RecordDate()
         self.full = 0
         self.express = 0
     }
 }
-
-//func ==(a: Record, b: Record) -> Bool {
-//    let dateFormatter = DateFormatter()
-//    dateFormatter.dateFormat = "yyyy-MM-dd"
-//    return
-//        a.express == b.express &&
-//        b.full == b.full &&
-//        dateFormatter.string(from: a.date) == dateFormatter.string(from: b.date)
-//}
