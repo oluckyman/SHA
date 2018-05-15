@@ -35,7 +35,13 @@ enum Main {
         struct Request {}
     }
     
-    enum NavigateBack {
-        struct Request {}
+    enum Navigate {
+        enum Direction {
+            case prev
+            case next
+        }
+        struct Request {
+            var direction: Direction
+        }
     }
 }

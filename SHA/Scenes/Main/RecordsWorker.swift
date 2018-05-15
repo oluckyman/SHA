@@ -44,18 +44,3 @@ class RecordsWorker {
         }
     }
 }
-
-
-/*
- currentRecord = records.first(where: { dateFormatter.string(from: $0.date) == today })
- }
- }
- var currentRecord: Record!
- 
- // MARK: - Records
- 
- func fetchRecord(request: Main.FetchRecord.Request) {
- worker.fetchRecords { records in
- //self.records = records.count > 0 ? records : [Record()]
- // - if no today record, make one
-*/

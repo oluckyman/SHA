@@ -17,13 +17,11 @@ protocol MainBusinessLogic {
     func fetchRecord(request: Main.FetchRecord.Request)
     func incrementFull(request: Main.IncrementFull.Request)
     func resetFull(request: Main.ResetFull.Request)
-    func navigateBack(request: Main.NavigateBack.Request)
+    func navigate(request: Main.Navigate.Request)
 }
 
 protocol MainDataStore {
     var currentDate: RecordDate { get }
-    var records: [Record] { get }
-//    var currentRecord: Record! { get }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
@@ -31,16 +29,6 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     var worker = RecordsWorker(recordsStore: RecordsMemStore())
     
     var currentDate = RecordDate()
-    
-    var records: [Record] = [] {
-        didSet {
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "yyyy-MM-dd"
-//            let today = dateFormatter.string(from: Date())
-//            currentRecord = records.first(where: { dateFormatter.string(from: $0.date) == today })
-        }
-    }
-//    var currentRecord: Record!
     
     // MARK: - Records
     
@@ -68,8 +56,13 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     
     // MARK: - Navigation
     
-    func navigateBack(request: Main.NavigateBack.Request) {
-        currentDate = currentDate.yesterday()
+    func navigate(request: Main.Navigate.Request) {
+        switch request.direction {
+        case .next:
+            currentDate = currentDate.tomorrow()
+        case .prev:
+            currentDate = currentDate.yesterday()
+        }
         fetchRecord(request: Main.FetchRecord.Request())
     }
 }

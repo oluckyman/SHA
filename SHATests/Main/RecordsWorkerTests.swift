@@ -129,12 +129,12 @@ class RecordsWorkerTests: XCTestCase {
         
         // When
         sut.increment(counter: .full, for: RecordDate(from: "2018-01-01")!) { record in
-            expectRecord.fulfill()
             XCTAssert(storeSpy.updateRecordCalled, "Calling fetchRecord(for date:) should ask the data store to update record")
             XCTAssertEqual(record, Record(date: RecordDate(from: "2018-01-01")!, full: 43, express: 42), "Worker returns incremented record")
+            expectRecord.fulfill()
         }
         
         // Then
-        wait(for: [expectRecord], timeout: 1)
+        wait(for: [expectRecord], timeout: 2)
     }
 }

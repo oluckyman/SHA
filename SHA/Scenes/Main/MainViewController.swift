@@ -106,13 +106,21 @@ class MainViewController: UIViewController, MainDisplayLogic {
     
     // MARK: - Navigation
     
-    @IBAction func backButtonPressed(_ sender: Any) {
-        navigateBack()
+    @IBAction func prevButtonPressed(_ sender: Any) {
+        navigatePrev()
     }
     
-    func navigateBack() {
-        let request = Main.NavigateBack.Request()
-        interactor?.navigateBack(request: request)
+    @IBAction func nextButtonPressed(_ sender: Any) {
+        navigateNext()
+    }
+
+    func navigatePrev() {
+        let request = Main.Navigate.Request(direction: .prev)
+        interactor?.navigate(request: request)
     }
     
+    func navigateNext() {
+        let request = Main.Navigate.Request(direction: .next)
+        interactor?.navigate(request: request)
+    }
 }

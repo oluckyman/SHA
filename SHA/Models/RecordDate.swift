@@ -39,6 +39,11 @@ class RecordDate {
         let oneDayInterval = 60 * 60 * 24 * 1.0
         return RecordDate(from: Date(timeInterval: -oneDayInterval, since: rawDate))
     }
+
+    func tomorrow() -> RecordDate {
+        let oneDayInterval = 60 * 60 * 24 * 1.0
+        return RecordDate(from: Date(timeInterval: oneDayInterval, since: rawDate))
+    }
 }
 
 extension RecordDate : CustomStringConvertible {
