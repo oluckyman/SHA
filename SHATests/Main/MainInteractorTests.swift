@@ -50,6 +50,7 @@ class MainInteractorTests: XCTestCase {
     class RecordsWorkerSpy: RecordsWorker {
         var fetchRecordCalled = false
         var incrementCalled = false
+        var incrementArguments: (Record.Counters, RecordDate)?
         
         override func fetchRecord(for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             fetchRecordCalled = true
@@ -58,11 +59,13 @@ class MainInteractorTests: XCTestCase {
         
         override func increment(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             incrementCalled = true
+            incrementArguments = (counter, date)
         }
 
     }
 
     // MARK: - Tests
+    // MARK: Fetch Record
     
     func testFetchRecordAsksWorkerToFetchRecord() {
         // Given
@@ -81,8 +84,6 @@ class MainInteractorTests: XCTestCase {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
-        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
-        sut.worker = workerSpy
         let request = Main.FetchRecord.Request()
 
         // When
@@ -94,10 +95,15 @@ class MainInteractorTests: XCTestCase {
         XCTAssertEqual(record, Record())
     }
     
+    // MARK: Increment Full
+
     func testIncrementFullAsksWorkerToIncrement() {
         // Given
         let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
         sut.worker = workerSpy
+
+        let someDate = RecordDate(from: "2018-01-01")!
+        sut.currentDate = someDate
 
         // When
         sut.incrementFull(request: Main.IncrementFull.Request())
@@ -107,23 +113,24 @@ class MainInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(workerSpy.incrementCalled, "incrementFull(request:) should ask worker to increment")
+        XCTAssertEqual(workerSpy.incrementArguments?.0, .full, "incrementFull(request:) should ask worker with .full type")
+        XCTAssertEqual(workerSpy.incrementArguments?.1, someDate, "incrementFull(request:) should ask worker with .full type")
     }
     
-//    func testIncrementFullAsksPresenterToFormatRecord() {
-//        // Given
-//        let presenterSpy = MainPresentationLogicSpy()
-//        sut.presenter = presenterSpy
-//        sut.currentRecord = Record(date: RecordDate(), full: 42, express: 0)
-//        let request = Main.IncrementFull.Request()
-//        
-//        // When
-//        sut.incrementFull(request: request)
-//        
-//        // Then
-//        XCTAssertTrue(presenterSpy.presentRecordCalled, "incrementFull(request:) should ask the presenter to format a record")
-//        let record = presenterSpy.main_fetchRecord_response?.record
-//        XCTAssertEqual(record, Record(date: RecordDate(), full: 42 + 1, express: 0))
-//    }
+    func testIncrementFullAsksPresenterToFormatRecord() {
+        // Given
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        let request = Main.IncrementFull.Request()
+        
+        // When
+        sut.incrementFull(request: request)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "incrementFull(request:) should ask the presenter to format a record")
+        let record = presenterSpy.main_fetchRecord_response?.record
+        XCTAssertEqual(record, Record(date: RecordDate(), full: 1, express: 0))
+    }
 
 //    func testResetFullAsksPresenterToFormatRecord() {
 //        // Given
