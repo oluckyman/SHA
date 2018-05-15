@@ -54,4 +54,29 @@ class RecordsStoreTests: XCTestCase {
         // Then
         wait(for: [expect], timeout: 0.6)
     }
+    
+    // MARK: Update
+    
+    func testUpdateShouldReturnUpdatedRecord() {
+        // Given
+        let expect = expectation(description: "Wait for record")
+        let testRecords = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
+            Record()
+        ]
+        sutMem.records = testRecords
+        var newRecord = testRecords[0]
+        newRecord.full = 42
+        
+        // When
+        sutMem.update(record: newRecord) { record in
+            XCTAssertEqual(record, newRecord, "Store should return updated record")
+            expect.fulfill()
+        }
+        
+        // Then
+        wait(for: [expect], timeout: 0.6)
+    }
+    
+
 }
