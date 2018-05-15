@@ -17,8 +17,8 @@ class RecordDate {
     
     var rawDate: Date
     
-    init() {
-        rawDate = Date()
+    init(from date: Date = Date()) {
+        rawDate = date
     }
     
     /// Creates a new instance by decoding from the string.
@@ -33,6 +33,11 @@ class RecordDate {
         } else {
             return nil
         }
+    }
+    
+    func yesterday() -> RecordDate {
+        let oneDayInterval = 60 * 60 * 24 * 1.0
+        return RecordDate(from: Date(timeInterval: -oneDayInterval, since: rawDate))
     }
 }
 

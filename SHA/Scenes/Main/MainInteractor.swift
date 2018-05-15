@@ -69,14 +69,7 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     // MARK: - Navigation
     
     func navigateBack(request: Main.NavigateBack.Request) {
-//        currentRecord.date = dayBefore(currentRecord.date)
-//        let response = Main.FetchRecord.Response(record: currentRecord)
-//        presenter?.presentRecord(response: response)
+        currentDate = currentDate.yesterday()
+        fetchRecord(request: Main.FetchRecord.Request())
     }
-    
-//    private func dayBefore(_ date: Date) -> Date {
-//        let oneDayInterval = 60 * 60 * 24 * 1.0
-//        return Date(timeInterval: -oneDayInterval, since: date)
-//    }
-    
 }

@@ -108,9 +108,6 @@ class MainInteractorTests: XCTestCase {
         // When
         sut.incrementFull(request: Main.IncrementFull.Request())
         
-        // TODO: test that it was called with .full and for specific date (set current date in Given)
-        // then in worker test incremnet function that it's really increments
-        
         // Then
         XCTAssertTrue(workerSpy.incrementCalled, "incrementFull(request:) should ask worker to increment")
         XCTAssertEqual(workerSpy.incrementArguments?.0, .full, "incrementFull(request:) should ask worker with .full type")
@@ -132,6 +129,8 @@ class MainInteractorTests: XCTestCase {
         XCTAssertEqual(record, Record(date: RecordDate(), full: 1, express: 0))
     }
 
+    // MARK: Reset Full
+
 //    func testResetFullAsksPresenterToFormatRecord() {
 //        // Given
 //        let presenterSpy = MainPresentationLogicSpy()
@@ -148,20 +147,22 @@ class MainInteractorTests: XCTestCase {
 //        XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
 //    }
 
-//    func testNavigateBackAsksPresenterToFormatRecord() {
-//        // Given
-//        let presenterSpy = MainPresentationLogicSpy()
-//        sut.presenter = presenterSpy
-//        sut.currentRecord = Record(date: Date(from: "2018-01-01")!, full: 0, express: 0)
-//        let request = Main.NavigateBack.Request()
-//
-//        // When
-//        sut.navigateBack(request: request)
-//
-//        // Then
-//        XCTAssertTrue(presenterSpy.presentRecordCalled, "navigateBack(request:) should ask the presenter to format a record")
-//        let record = presenterSpy.main_fetchRecord_response?.record
-//        XCTAssertEqual(record, Record(date: Date(from: "2017-12-31")!, full: 0, express: 0))
-//    }
+    // MARK: Navigate Back
+
+    func testNavigateBackAsksPresenterToFormatRecord() {
+        // Given
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        sut.currentDate = RecordDate(from: "2018-01-01")!
+        let request = Main.NavigateBack.Request()
+
+        // When
+        sut.navigateBack(request: request)
+
+        // Then
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "navigateBack(request:) should ask the presenter to format a record")
+        let record = presenterSpy.main_fetchRecord_response?.record
+        XCTAssertEqual(record, Record(date: RecordDate(from: "2017-12-31")!, full: 0, express: 0))
+    }
 
 }

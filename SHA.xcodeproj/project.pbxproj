@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A02D0D9820A97E31004EEC63 /* RecordDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D0D9720A97E31004EEC63 /* RecordDate.swift */; };
 		A0543D6E20A2C50300FF88B4 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0543D6D20A2C50300FF88B4 /* Record.swift */; };
-		A0543D7020A2C9B100FF88B4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0543D6F20A2C9B100FF88B4 /* Date.swift */; };
 		A05C291920A5A482009853DB /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05C291820A5A482009853DB /* UIExtensions.swift */; };
 		A0C077E220907C1F001A5FB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C077E120907C1F001A5FB0 /* AppDelegate.swift */; };
 		A0C077E720907C1F001A5FB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C077E520907C1F001A5FB0 /* Main.storyboard */; };
@@ -41,7 +40,6 @@
 /* Begin PBXFileReference section */
 		A02D0D9720A97E31004EEC63 /* RecordDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDate.swift; sourceTree = "<group>"; };
 		A0543D6D20A2C50300FF88B4 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
-		A0543D6F20A2C9B100FF88B4 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A05C291820A5A482009853DB /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		A0C077DE20907C1F001A5FB0 /* SHA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SHA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C077E120907C1F001A5FB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 		A05C291720A5A460009853DB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A0543D6F20A2C9B100FF88B4 /* Date.swift */,
 				A05C291820A5A482009853DB /* UIExtensions.swift */,
 			);
 			path = Extensions;
@@ -283,7 +280,6 @@
 				A02D0D9820A97E31004EEC63 /* RecordDate.swift in Sources */,
 				A0C0780920908F12001A5FB0 /* MainPresenter.swift in Sources */,
 				A05C291920A5A482009853DB /* UIExtensions.swift in Sources */,
-				A0543D7020A2C9B100FF88B4 /* Date.swift in Sources */,
 				A0C0780A20908F12001A5FB0 /* RecordsWorker.swift in Sources */,
 				A0C077E220907C1F001A5FB0 /* AppDelegate.swift in Sources */,
 				A0C46D6B20A06B9D007263DA /* RecordsMemStore.swift in Sources */,
