@@ -17,6 +17,7 @@ class RecordsMemStore: RecordsStore {
     
     func update(record: Record, completionHanler: @escaping (Record) -> Void) {
         // do update here
+        records.append(record)
         completionHanler(record)
 //        if let record = records.first(where: { $0.date == record.date }) {
 //

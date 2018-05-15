@@ -77,6 +77,47 @@ class RecordsStoreTests: XCTestCase {
         // Then
         wait(for: [expect], timeout: 0.6)
     }
-    
 
+    func testUpdateShouldInsertNonexistentRecord() {
+        // Given
+        let expect = expectation(description: "Wait")
+        let testRecords = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
+        ]
+        sutMem.records = testRecords
+        let newRecord = Record(date: RecordDate(), full: 42, express: 42)
+        
+        // When
+        sutMem.update(record: newRecord) { record in
+            expect.fulfill()
+        }
+        
+        // Then
+        wait(for: [expect], timeout: 0.6)
+        XCTAssertEqual(sutMem.records, [testRecords[0], newRecord] , "Store should add new record")
+
+    }
+    
+    func testUpdateShouldUpdateTheRecordInRecords() {
+        // Given
+        let expect = expectation(description: "Wait for record")
+        let testRecords = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
+            Record(),
+            Record(date: RecordDate(from: "2020-01-01")!, full: 20, express: 20),
+
+        ]
+        sutMem.records = testRecords
+        var newRecord = testRecords[1]
+        newRecord.full = 42
+        
+        // When
+        sutMem.update(record: newRecord) { record in
+            expect.fulfill()
+        }
+        
+        // Then
+        wait(for: [expect], timeout: 0.6)
+        XCTAssertEqual(sutMem.records, [testRecords[0], newRecord, testRecords[2]], "Store should store updated record")
+    }
 }
