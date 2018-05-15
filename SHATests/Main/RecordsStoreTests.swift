@@ -105,7 +105,6 @@ class RecordsStoreTests: XCTestCase {
             Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
             Record(),
             Record(date: RecordDate(from: "2020-01-01")!, full: 20, express: 20),
-
         ]
         sutMem.records = testRecords
         var newRecord = testRecords[1]
