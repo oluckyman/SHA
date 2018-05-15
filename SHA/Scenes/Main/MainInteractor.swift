@@ -17,63 +17,52 @@ protocol MainBusinessLogic {
     func fetchRecord(request: Main.FetchRecord.Request)
     func incrementFull(request: Main.IncrementFull.Request)
     func resetFull(request: Main.ResetFull.Request)
-    func navigateBack(request: Main.NavigateBack.Request)
+    func navigate(request: Main.Navigate.Request)
 }
 
 protocol MainDataStore {
-    var records: [Record] { get }
-    var currentRecord: Record! { get }
+    var currentDate: RecordDate { get }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
     var worker = RecordsWorker(recordsStore: RecordsMemStore())
     
-    var records: [Record] = [] {
-        didSet {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let today = dateFormatter.string(from: Date())
-            currentRecord = records.first(where: { dateFormatter.string(from: $0.date) == today })
-        }
-    }
-    var currentRecord: Record!
+    var currentDate = RecordDate()
     
     // MARK: - Records
     
     func fetchRecord(request: Main.FetchRecord.Request) {
-        worker.fetchRecords { records in
-            self.records = records.count > 0 ? records : [Record()]
-            let response = Main.FetchRecord.Response(record: self.currentRecord)
+        worker.fetchRecord(for: currentDate, completionHandler: { record in
+            let response = Main.FetchRecord.Response(record: record)
             self.presenter?.presentRecord(response: response)
-        }
+        })
     }
 
     // MARK: - Counters
     
     func incrementFull(request: Main.IncrementFull.Request) {
-        currentRecord.full += 1
-        let response = Main.FetchRecord.Response(record: currentRecord)
-        presenter?.presentRecord(response: response)
+        worker.increment(counter: .full, for: currentDate) { record in
+            let response = Main.FetchRecord.Response(record: record)
+            self.presenter?.presentRecord(response: response)
+        }
     }
     
     func resetFull(request: Main.ResetFull.Request) {
-        currentRecord.full = 0
-        let response = Main.FetchRecord.Response(record: currentRecord)
-        presenter?.presentRecord(response: response)
+//        currentRecord.full = 0
+//        let response = Main.FetchRecord.Response(record: currentRecord)
+//        presenter?.presentRecord(response: response)
     }
     
     // MARK: - Navigation
     
-    func navigateBack(request: Main.NavigateBack.Request) {
-        currentRecord.date = dayBefore(currentRecord.date)
-        let response = Main.FetchRecord.Response(record: currentRecord)
-        presenter?.presentRecord(response: response)
+    func navigate(request: Main.Navigate.Request) {
+        switch request.direction {
+        case .next:
+            currentDate = currentDate.tomorrow()
+        case .prev:
+            currentDate = currentDate.yesterday()
+        }
+        fetchRecord(request: Main.FetchRecord.Request())
     }
-    
-    private func dayBefore(_ date: Date) -> Date {
-        let oneDayInterval = 60 * 60 * 24 * 1.0
-        return Date(timeInterval: -oneDayInterval, since: date)
-    }
-    
 }

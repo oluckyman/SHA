@@ -51,20 +51,20 @@ class MainPresenterTests: XCTestCase {
 
     // MARK: - Tests
 
-    private func getDateString(date: Date) -> String {
+    private func getDateString(date: RecordDate) -> String {
         let dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()
             dateFormatter.setLocalizedDateFormatFromTemplate("EdMMM")
             return dateFormatter
         }()
-        return dateFormatter.string(from: date)
+        return dateFormatter.string(from: date.rawDate)
     }
     
     func testPresentRecordShouldFormatEmptyRecordForDisplay() {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
-        let record = Record(date: Date(from: "2018-05-08")!, full: 0, express: 0)
+        let record = Record(date: RecordDate(from: "2018-05-08")!, full: 0, express: 0)
         let response = Main.FetchRecord.Response(record: record)
         
         // When
@@ -83,7 +83,7 @@ class MainPresenterTests: XCTestCase {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
-        let record = Record(date: Date(from: "2018-05-07")!, full: 2, express: 1)
+        let record = Record(date: RecordDate(from: "2018-05-07")!, full: 2, express: 1)
         let response = Main.FetchRecord.Response(record: record)
         
         // When
@@ -100,7 +100,7 @@ class MainPresenterTests: XCTestCase {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
-        let record = Record(date: Date(), full: 0, express: 0)
+        let record = Record()
         let response = Main.FetchRecord.Response(record: record)
 
         // When

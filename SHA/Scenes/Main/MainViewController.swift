@@ -88,15 +88,15 @@ class MainViewController: UIViewController, MainDisplayLogic {
         incrementFull()
     }
     
+    func incrementFull() {
+        let request = Main.IncrementFull.Request()
+        interactor?.incrementFull(request: request)
+    }
+    
     @IBAction func fullButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             resetFull()
         }
-    }
-    
-    func incrementFull() {
-        let request = Main.IncrementFull.Request()
-        interactor?.incrementFull(request: request)
     }
     
     func resetFull() {
@@ -106,13 +106,21 @@ class MainViewController: UIViewController, MainDisplayLogic {
     
     // MARK: - Navigation
     
-    @IBAction func backButtonPressed(_ sender: Any) {
-        navigateBack()
+    @IBAction func prevButtonPressed(_ sender: Any) {
+        navigatePrev()
     }
     
-    func navigateBack() {
-        let request = Main.NavigateBack.Request()
-        interactor?.navigateBack(request: request)
+    @IBAction func nextButtonPressed(_ sender: Any) {
+        navigateNext()
+    }
+
+    func navigatePrev() {
+        let request = Main.Navigate.Request(direction: .prev)
+        interactor?.navigate(request: request)
     }
     
+    func navigateNext() {
+        let request = Main.Navigate.Request(direction: .next)
+        interactor?.navigate(request: request)
+    }
 }

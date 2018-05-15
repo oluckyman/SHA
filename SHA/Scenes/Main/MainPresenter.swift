@@ -32,7 +32,7 @@ class MainPresenter: MainPresentationLogic {
         let date = record.date
         let full = record.full
         let express = record.express
-        let displayDate = dateFormatter.string(from: date)
+        let displayDate = dateFormatter.string(from: date.rawDate)
         let displayFull = full == 0 ? "Full" : "Full x \(full)"
         let displayExpress = express == 0 ? "Express" : "Express x \(express)"
         
