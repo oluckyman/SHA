@@ -39,6 +39,7 @@ class RecordsWorkerTests: XCTestCase {
     
     class RecordsMemStoreSpy : RecordsMemStore {
         var fetchRecordsCalled = false
+        var updateRecordCalled = false
         var recordsInStore: [Record] = []
         
         override func fetchRecords(completionHandler: @escaping ([Record]) -> Void) {
@@ -47,9 +48,17 @@ class RecordsWorkerTests: XCTestCase {
                 completionHandler(self.recordsInStore)
             }
         }
+        
+        override func update(record: Record, completionHanler: @escaping (Record) -> Void) {
+            updateRecordCalled = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                completionHanler(record)
+            }
+        }
     }
 
     // MARK: - Tests
+    // MARK: Fetch Record
 
     func testFetchRecordReturnsEmptyTodayRecordIfNoRecords() {
         // Given
@@ -106,5 +115,26 @@ class RecordsWorkerTests: XCTestCase {
         // Then
         XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecord(for date:) should ask the data store to fetch records")
         wait(for: [expectRecord], timeout: 0.6)
+    }
+    
+    // MARK: Increment
+    
+    func testIncrementReturnsIncrementedRecord() {
+        // Given
+        let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
+        storeSpy.recordsInStore = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 42, express: 42),
+        ]
+        let expectRecord = expectation(description: "Wait for fetched record")
+        
+        // When
+        sut.increment(counter: .full, for: RecordDate(from: "2018-01-01")!) { record in
+            expectRecord.fulfill()
+            XCTAssert(storeSpy.updateRecordCalled, "Calling fetchRecord(for date:) should ask the data store to update record")
+            XCTAssertEqual(record, Record(date: RecordDate(from: "2018-01-01")!, full: 43, express: 42), "Worker returns incremented record")
+        }
+        
+        // Then
+        wait(for: [expectRecord], timeout: 1)
     }
 }
