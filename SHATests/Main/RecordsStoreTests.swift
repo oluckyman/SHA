@@ -12,7 +12,7 @@ import XCTest
 class RecordsStoreTests: XCTestCase {
     // MARK: - Subject under test
     
-    var sutMem: RecordsMemStore!
+    var sut: RecordsMemStore!
     
     // MARK: - Test lifecycle
     
@@ -28,7 +28,7 @@ class RecordsStoreTests: XCTestCase {
     // MARK: - Test setup
     
     func setup() {
-        sutMem = RecordsMemStore()
+        sut = RecordsMemStore()
     }
     
     // MARK: - Test doubles
@@ -43,10 +43,10 @@ class RecordsStoreTests: XCTestCase {
             Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
             Record()
         ]
-        sutMem.records = testRecords
+        sut.records = testRecords
         
         // When
-        sutMem.fetchRecords { records in
+        sut.fetchRecords { records in
             XCTAssertEqual(records, testRecords, "Store should return records array when fetched")
             expect.fulfill()
         }
@@ -64,12 +64,12 @@ class RecordsStoreTests: XCTestCase {
             Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
             Record()
         ]
-        sutMem.records = testRecords
+        sut.records = testRecords
         var newRecord = testRecords[0]
         newRecord.full = 42
         
         // When
-        sutMem.update(record: newRecord) { record in
+        sut.update(record: newRecord) { record in
             XCTAssertEqual(record, newRecord, "Store should return updated record")
             expect.fulfill()
         }
@@ -84,18 +84,17 @@ class RecordsStoreTests: XCTestCase {
         let testRecords = [
             Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
         ]
-        sutMem.records = testRecords
+        sut.records = testRecords
         let newRecord = Record(date: RecordDate(), full: 42, express: 42)
         
         // When
-        sutMem.update(record: newRecord) { record in
+        sut.update(record: newRecord) { record in
             expect.fulfill()
         }
         
         // Then
         wait(for: [expect], timeout: 0.6)
-        XCTAssertEqual(sutMem.records, [testRecords[0], newRecord] , "Store should add new record")
-
+        XCTAssertEqual(sut.records, [testRecords[0], newRecord] , "Store should add new record")
     }
     
     func testUpdateShouldUpdateTheRecordInRecords() {
@@ -106,17 +105,17 @@ class RecordsStoreTests: XCTestCase {
             Record(),
             Record(date: RecordDate(from: "2020-01-01")!, full: 20, express: 20),
         ]
-        sutMem.records = testRecords
+        sut.records = testRecords
         var newRecord = testRecords[1]
         newRecord.full = 42
         
         // When
-        sutMem.update(record: newRecord) { record in
+        sut.update(record: newRecord) { record in
             expect.fulfill()
         }
         
         // Then
         wait(for: [expect], timeout: 0.6)
-        XCTAssertEqual(sutMem.records, [testRecords[0], newRecord, testRecords[2]], "Store should store updated record")
+        XCTAssertEqual(sut.records, [testRecords[0], newRecord, testRecords[2]], "Store should store updated record")
     }
 }

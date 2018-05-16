@@ -13,6 +13,7 @@
 import UIKit
 
 protocol RecordsStore {
+    var records: [Record] { get set}
     func fetchRecords(completionHandler: @escaping ([Record]) -> Void)
     func update(record: Record, completionHanler: @escaping (Record) -> Void)
 }
