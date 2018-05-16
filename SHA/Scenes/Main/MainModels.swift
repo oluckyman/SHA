@@ -33,8 +33,10 @@ enum Main {
         }
     }
     
-    enum ResetFull {
-        struct Request {}
+    enum Reset {
+        struct Request {
+            var counter: Record.Counters
+        }
     }
     
     enum Navigate {

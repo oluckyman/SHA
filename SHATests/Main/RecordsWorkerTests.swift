@@ -137,4 +137,28 @@ class RecordsWorkerTests: XCTestCase {
         // Then
         wait(for: [expectRecord], timeout: 2)
     }
+    
+    // MARK: Reset
+    
+    func testResetReturnsResetRecord() {
+        // Given
+        let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
+        storeSpy.recordsInStore = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 42, express: 42),
+        ]
+        let expectRecord = expectation(description: "Wait for fetched record")
+        
+        // When
+        var actualRecord: Record!
+        sut.reset(counter: .express, for: RecordDate(from: "2018-01-01")!) { record in
+            expectRecord.fulfill()
+            actualRecord = record
+        }
+        
+        // Then
+        wait(for: [expectRecord], timeout: 2)
+        XCTAssert(storeSpy.updateRecordCalled, "Calling fetchRecord(for date:) should ask the data store to update record")
+        XCTAssertEqual(actualRecord, Record(date: RecordDate(from: "2018-01-01")!, full: 42, express: 0), "Worker returns reset record")
+
+    }
 }

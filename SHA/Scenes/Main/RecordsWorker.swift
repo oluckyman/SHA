@@ -43,4 +43,17 @@ class RecordsWorker {
             self.recordsStore.update(record: newRecord, completionHanler: completionHandler)
         }
     }
+    
+    func reset(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+        fetchRecord(for: date) { record in
+            var newRecord = Record(date: date, full: record.full, express: record.express)
+            switch counter {
+            case .full:
+                newRecord.full = 0
+            case .express:
+                newRecord.express = 0
+            }
+            self.recordsStore.update(record: newRecord, completionHanler: completionHandler)
+        }
+    }
 }

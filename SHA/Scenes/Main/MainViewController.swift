@@ -109,10 +109,23 @@ class MainViewController: UIViewController, MainDisplayLogic {
     }
     
     func resetFull() {
-//        let request = Main.ResetFull.Request()
-//        interactor?.resetFull(request: request)
+        let request = Main.Reset.Request(counter: .full)
+        interactor?.reset(request: request)
     }
     
+    @IBAction func expressButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            resetExpress()
+        }
+    }
+    
+    func resetExpress() {
+        let request = Main.Reset.Request(counter: .express)
+        interactor?.reset(request: request)
+    }
+    
+
+
     // MARK: - Navigation
     
     @IBAction func prevButtonPressed(_ sender: Any) {

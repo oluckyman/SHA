@@ -15,32 +15,32 @@ import XCTest
 
 class MainInteractorTests: XCTestCase {
     // MARK: - Subject under test
-
+    
     var sut: MainInteractor!
-
+    
     // MARK: - Test lifecycle
-
+    
     override func setUp() {
         super.setUp()
         setupMainInteractor()
     }
-
+    
     override func tearDown() {
         super.tearDown()
     }
-
+    
     // MARK: - Test setup
-
+    
     func setupMainInteractor() {
         sut = MainInteractor()
     }
-
+    
     // MARK: - Test doubles
-
+    
     class MainPresentationLogicSpy: MainPresentationLogic {
         var presentRecordCalled = false
         var main_fetchRecord_response: Main.FetchRecord.Response?
-
+        
         func presentRecord(response: Main.FetchRecord.Response) {
             presentRecordCalled = true
             main_fetchRecord_response = response
@@ -51,6 +51,8 @@ class MainInteractorTests: XCTestCase {
         var fetchRecordCalled = false
         var incrementCalled = false
         var incrementArguments: (Record.Counters, RecordDate)?
+        var resetCalled = false
+        var resetArguments: (Record.Counters, RecordDate)?
         
         override func fetchRecord(for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             fetchRecordCalled = true
@@ -61,9 +63,13 @@ class MainInteractorTests: XCTestCase {
             incrementCalled = true
             incrementArguments = (counter, date)
         }
-
+        
+        override func reset(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+            resetCalled = true
+            resetArguments = (counter, date)
+        }
     }
-
+    
     // MARK: - Tests
     // MARK: Fetch Record
     
@@ -79,16 +85,16 @@ class MainInteractorTests: XCTestCase {
         // Then
         XCTAssertTrue(spy.fetchRecordCalled, "fetchRecord(request:) should ask the worker to fetch the record")
     }
-
+    
     func testFetchRecordAsksPresenterToFormatRecord() {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
         let request = Main.FetchRecord.Request()
-
+        
         // When
         sut.fetchRecord(request: request)
-
+        
         // Then
         XCTAssertTrue(presenterSpy.presentRecordCalled, "fetchRecord(request:) should ask the presenter to format the record")
         let record = presenterSpy.main_fetchRecord_response?.record
@@ -96,15 +102,15 @@ class MainInteractorTests: XCTestCase {
     }
     
     // MARK: Increment
-
+    
     func testIncrementAsksWorkerToIncrement() {
         // Given
         let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
         sut.worker = workerSpy
-
+        
         let someDate = RecordDate(from: "2018-01-01")!
         sut.currentDate = someDate
-
+        
         // When
         sut.increment(request: Main.Increment.Request(counter: .full))
         
@@ -128,27 +134,42 @@ class MainInteractorTests: XCTestCase {
         let record = presenterSpy.main_fetchRecord_response?.record
         XCTAssertEqual(record, Record(date: RecordDate(), full: 1, express: 0))
     }
-
-    // MARK: Reset Full
-
-//    func testResetFullAsksPresenterToFormatRecord() {
-//        // Given
-//        let presenterSpy = MainPresentationLogicSpy()
-//        sut.presenter = presenterSpy
-//        sut.currentRecord = Record(date: RecordDate(), full: 42, express: 0)
-//        let request = Main.ResetFull.Request()
-//
-//        // When
-//        sut.resetFull(request: request)
-//
-//        // Then
-//        XCTAssertTrue(presenterSpy.presentRecordCalled, "resetFull(request:) should ask the presenter to format a record")
-//        let record = presenterSpy.main_fetchRecord_response?.record
-//        XCTAssertEqual(record, Record(date: Date(), full: 0, express: 0))
-//    }
-
+    
+    // MARK: Reset
+    
+    func testResetAsksWorkerToReset() {
+        // Given
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        sut.worker = workerSpy
+        
+        let someDate = RecordDate(from: "2018-01-01")!
+        sut.currentDate = someDate
+        
+        // When
+        sut.reset(request: Main.Reset.Request(counter: .full))
+        
+        // Then
+        XCTAssertTrue(workerSpy.resetCalled, "reset(request:) should ask worker to reset")
+        XCTAssertEqual(workerSpy.resetArguments?.0, .full, "reset(request:) should ask worker with .full type")
+        XCTAssertEqual(workerSpy.resetArguments?.1, someDate, "reset(request:) should ask worker with proper date")
+    }
+    
+    
+    func testResetAsksPresenterToFormatRecord() {
+        // Given
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        let request = Main.Reset.Request(counter: .full)
+        
+        // When
+        sut.reset(request: request)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "reset(request:) should ask the presenter to format a record")
+    }
+    
     // MARK: Navigate
-
+    
     func testNavigatePrevAsksPresenterToFormatRecord() {
         // Given
         let presenterSpy = MainPresentationLogicSpy()

@@ -43,6 +43,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0o-aP-Ria" customClass="BorderedButton" customModule="SHA" customModuleProvider="target">
                                 <rect key="frame" x="16" y="487" width="343" height="160"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="36"/>
                                 <state key="normal" title="Express × 4"/>
                                 <userDefinedRuntimeAttributes>
@@ -58,6 +59,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="expressButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OEu-ml-aS2"/>
+                                    <outletCollection property="gestureRecognizers" destination="eLU-Yz-XxZ" appends="YES" id="JI2-tH-ccl"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mon, 8 May" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hf1-S9-hA9">
@@ -96,9 +98,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="x5Q-JM-2oa">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="x5Q-JM-2oa" userLabel="Full Long Press Gesture Recognizer">
                     <connections>
                         <action selector="fullButtonLongPressed:" destination="BYZ-38-t0r" id="3zt-uc-9p5"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="eLU-Yz-XxZ" userLabel="Express Long Press Gesture Recognizer">
+                    <connections>
+                        <action selector="expressButtonLongPressed:" destination="BYZ-38-t0r" id="JMN-Ji-lSj"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>

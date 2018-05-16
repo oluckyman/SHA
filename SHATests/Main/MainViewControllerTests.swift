@@ -60,7 +60,7 @@ class MainViewControllerTests: XCTestCase {
             incrementCalled = true
             incrementCounter = request.counter
         }
-//        func resetFull(request: Main.ResetFull.Request) {}
+        func reset(request: Main.Reset.Request) {}
         func navigate(request: Main.Navigate.Request) {}
     }
 
