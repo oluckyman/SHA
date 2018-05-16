@@ -95,9 +95,9 @@ class MainInteractorTests: XCTestCase {
         XCTAssertEqual(record, Record())
     }
     
-    // MARK: Increment Full
+    // MARK: Increment
 
-    func testIncrementFullAsksWorkerToIncrement() {
+    func testIncrementAsksWorkerToIncrement() {
         // Given
         let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
         sut.worker = workerSpy
@@ -106,25 +106,25 @@ class MainInteractorTests: XCTestCase {
         sut.currentDate = someDate
 
         // When
-        sut.incrementFull(request: Main.IncrementFull.Request())
+        sut.increment(request: Main.Increment.Request(counter: .full))
         
         // Then
-        XCTAssertTrue(workerSpy.incrementCalled, "incrementFull(request:) should ask worker to increment")
-        XCTAssertEqual(workerSpy.incrementArguments?.0, .full, "incrementFull(request:) should ask worker with .full type")
-        XCTAssertEqual(workerSpy.incrementArguments?.1, someDate, "incrementFull(request:) should ask worker with .full type")
+        XCTAssertTrue(workerSpy.incrementCalled, "increment(request:) should ask worker to increment")
+        XCTAssertEqual(workerSpy.incrementArguments?.0, .full, "increment(request:) should ask worker with .full type")
+        XCTAssertEqual(workerSpy.incrementArguments?.1, someDate, "increment(request:) should ask worker with .full type")
     }
     
-    func testIncrementFullAsksPresenterToFormatRecord() {
+    func testIncrementAsksPresenterToFormatRecord() {
         // Given
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
-        let request = Main.IncrementFull.Request()
+        let request = Main.Increment.Request(counter: .full)
         
         // When
-        sut.incrementFull(request: request)
+        sut.increment(request: request)
         
         // Then
-        XCTAssertTrue(presenterSpy.presentRecordCalled, "incrementFull(request:) should ask the presenter to format a record")
+        XCTAssertTrue(presenterSpy.presentRecordCalled, "increment(request:) should ask the presenter to format a record")
         let record = presenterSpy.main_fetchRecord_response?.record
         XCTAssertEqual(record, Record(date: RecordDate(), full: 1, express: 0))
     }

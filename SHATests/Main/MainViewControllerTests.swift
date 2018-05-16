@@ -49,13 +49,18 @@ class MainViewControllerTests: XCTestCase {
 
     class MainBusinessLogicSpy: MainBusinessLogic {
         var fetchRecordCalled = false
+        var incrementCalled = false
+        var incrementCounter: Record.Counters!
 
         func fetchRecord(request: Main.FetchRecord.Request) {
             fetchRecordCalled = true
         }
         
-        func incrementFull(request: Main.IncrementFull.Request) {}
-        func resetFull(request: Main.ResetFull.Request) {}
+        func increment(request: Main.Increment.Request) {
+            incrementCalled = true
+            incrementCounter = request.counter
+        }
+//        func resetFull(request: Main.ResetFull.Request) {}
         func navigate(request: Main.Navigate.Request) {}
     }
 
@@ -86,5 +91,33 @@ class MainViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.dateLabel.text, expected.date, "displayRecord(viewModel:) should update the Date label")
         XCTAssertEqual(sut.fullButton.currentTitle, expected.full, "displayRecord(viewModel:) should update the Full button title")
         XCTAssertEqual(sut.expressButton.currentTitle, expected.express, "displayRecord(viewModel:) should update the Expres button title")
+    }
+    
+    func testShouldAskInteractorToIncrementFull() {
+        // Given
+        let spy = MainBusinessLogicSpy()
+        sut.interactor = spy
+        
+        // When
+        loadView()
+        sut.incrementFull()
+        
+        // Then
+        XCTAssertTrue(spy.incrementCalled, "incrementFull() should ask the interactor to increment")
+        XCTAssertEqual(spy.incrementCounter, .full, "should ask to increment .full counter")
+    }
+
+    func testShouldAskInteractorToIncrementExpress() {
+        // Given
+        let spy = MainBusinessLogicSpy()
+        sut.interactor = spy
+        
+        // When
+        loadView()
+        sut.incrementExpress()
+        
+        // Then
+        XCTAssertTrue(spy.incrementCalled, "incrementFull() should ask the interactor to increment")
+        XCTAssertEqual(spy.incrementCounter, .express, "should ask to increment .express counter")
     }
 }

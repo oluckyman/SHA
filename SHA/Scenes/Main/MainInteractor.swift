@@ -15,8 +15,8 @@ import UIKit
 
 protocol MainBusinessLogic {
     func fetchRecord(request: Main.FetchRecord.Request)
-    func incrementFull(request: Main.IncrementFull.Request)
-    func resetFull(request: Main.ResetFull.Request)
+    func increment(request: Main.Increment.Request)
+//    func resetFull(request: Main.ResetFull.Request)
     func navigate(request: Main.Navigate.Request)
 }
 
@@ -41,8 +41,8 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
 
     // MARK: - Counters
     
-    func incrementFull(request: Main.IncrementFull.Request) {
-        worker.increment(counter: .full, for: currentDate) { record in
+    func increment(request: Main.Increment.Request) {
+        worker.increment(counter: request.counter, for: currentDate) { record in
             let response = Main.FetchRecord.Response(record: record)
             self.presenter?.presentRecord(response: response)
         }

@@ -89,8 +89,17 @@ class MainViewController: UIViewController, MainDisplayLogic {
     }
     
     func incrementFull() {
-        let request = Main.IncrementFull.Request()
-        interactor?.incrementFull(request: request)
+        let request = Main.Increment.Request(counter: .full)
+        interactor?.increment(request: request)
+    }
+    
+    @IBAction func expressButtonPressed(_ sender: Any) {
+        incrementExpress()
+    }
+    
+    func incrementExpress() {
+        let request = Main.Increment.Request(counter: .express)
+        interactor?.increment(request: request)
     }
     
     @IBAction func fullButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
@@ -100,8 +109,8 @@ class MainViewController: UIViewController, MainDisplayLogic {
     }
     
     func resetFull() {
-        let request = Main.ResetFull.Request()
-        interactor?.resetFull(request: request)
+//        let request = Main.ResetFull.Request()
+//        interactor?.resetFull(request: request)
     }
     
     // MARK: - Navigation

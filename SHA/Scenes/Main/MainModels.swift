@@ -27,8 +27,10 @@ enum Main {
         }
     }
     
-    enum IncrementFull {
-        struct Request {}
+    enum Increment {
+        struct Request {
+            var counter: Record.Counters
+        }
     }
     
     enum ResetFull {
