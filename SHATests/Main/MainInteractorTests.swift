@@ -209,4 +209,7 @@ class MainInteractorTests: XCTestCase {
         XCTAssertEqual(record, Record(date: RecordDate(from: "2018-01-02")!, full: 0, express: 0))
     }
     
+    // MARK: Share
+    
+    
 }

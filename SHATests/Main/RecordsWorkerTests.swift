@@ -114,7 +114,7 @@ class RecordsWorkerTests: XCTestCase {
         
         // Then
         XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecord(for date:) should ask the data store to fetch records")
-        wait(for: [expectRecord], timeout: 0.6)
+        wait(for: [expectRecord], timeout: 2)
     }
     
     // MARK: Increment

@@ -18,6 +18,7 @@ protocol MainBusinessLogic {
     func increment(request: Main.Increment.Request)
     func reset(request: Main.Reset.Request)
     func navigate(request: Main.Navigate.Request)
+    func share(request: Main.Share.Request)
 }
 
 protocol MainDataStore {
@@ -65,5 +66,10 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
             currentDate = currentDate.yesterday()
         }
         fetchRecord(request: Main.FetchRecord.Request())
+    }
+    
+    // MARK: - Share
+    
+    func share(request: Main.Share.Request) {
     }
 }

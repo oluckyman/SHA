@@ -48,4 +48,9 @@ enum Main {
             var direction: Direction
         }
     }
+    
+    enum Share {
+        struct Request {}
+        struct ViewModel {}
+    }
 }

@@ -47,6 +47,7 @@ class MainPresenterTests: XCTestCase {
             // https://clean-swift.com/clean-swift-tdd-part-4-presenter/
             main_fetchRecords_viewModel = viewModel
         }
+        func displayShareView(viewModel: Main.Share.ViewModel) {}
     }
 
     // MARK: - Tests
