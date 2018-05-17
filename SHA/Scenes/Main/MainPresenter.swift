@@ -25,6 +25,18 @@ class MainPresenter: MainPresentationLogic {
         dateFormatter.setLocalizedDateFormatFromTemplate("EdMMM")
         return dateFormatter
     }()
+    
+    let messageFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMMM YYYY")
+        return dateFormatter
+    }()
+    
+    let reportFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM"
+        return dateFormatter
+    }()
 
     // MARK: - Record
     
@@ -44,9 +56,9 @@ class MainPresenter: MainPresentationLogic {
     // MARK: - Share
     
     func presentShareReport(response: Main.Share.Response) {
-        let url = URL(string: "report.csv")!
-        let message = "April"
-        
+        let reportDate = reportFormatter.string(from: response.date.rawDate)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("SHA \(reportDate).csv")
+        let message = messageFormatter.string(from: response.date.rawDate)
         let viewModel = Main.Share.ViewModel(url: url, message: message)
         viewController?.displayShareView(viewModel: viewModel)
     }

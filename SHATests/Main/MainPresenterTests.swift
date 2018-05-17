@@ -66,6 +66,15 @@ class MainPresenterTests: XCTestCase {
         return dateFormatter.string(from: date.rawDate)
     }
     
+    private func getMonthString(date: RecordDate) -> String {
+        let dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.setLocalizedDateFormatFromTemplate("MMMM YYYY")
+            return dateFormatter
+        }()
+        return dateFormatter.string(from: date.rawDate)
+    }
+    
     func testPresentRecordShouldFormatEmptyRecordForDisplay() {
         // Given
         let spy = MainDisplayLogicSpy()
@@ -120,13 +129,20 @@ class MainPresenterTests: XCTestCase {
         // Given
         let spy = MainDisplayLogicSpy()
         sut.viewController = spy
-        let response = Main.Share.Response(month: Calendar.current.component(.month, from: Date()), records: [Record()])
+        let date = RecordDate(from: "2018-01-01")!
+        let expectedUrl = FileManager.default.temporaryDirectory.appendingPathComponent("SHA 2018-01.csv")
+        let expectedMessage = getMonthString(date: date)
+        
+        let response = Main.Share.Response(date: date, records: [Record()])
         
         // When
         sut.presentShareReport(response: response)
         
         // Then
+        let viewModel = spy.main_share_viewModel!
         XCTAssertTrue(spy.displayShareReportCalled, "presentShareReport asks view controller to display report")
+        XCTAssertEqual(viewModel.url, expectedUrl, "should format csv url properly")
+        XCTAssertEqual(viewModel.message, expectedMessage, "should format messsage properly")
     }
 
 }
