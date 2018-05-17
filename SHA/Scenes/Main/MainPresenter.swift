@@ -44,5 +44,10 @@ class MainPresenter: MainPresentationLogic {
     // MARK: - Share
     
     func presentShareReport(response: Main.Share.Response) {
+        let url = URL(string: "report.csv")!
+        let message = "April"
+        
+        let viewModel = Main.Share.ViewModel(url: url, message: message)
+        viewController?.displayShareView(viewModel: viewModel)
     }
 }

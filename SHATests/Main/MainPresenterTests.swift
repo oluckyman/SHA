@@ -40,18 +40,23 @@ class MainPresenterTests: XCTestCase {
     class MainDisplayLogicSpy: MainDisplayLogic {
         var displayRecordCalled = false
         var main_fetchRecords_viewModel: Main.FetchRecord.ViewModel!
+        var displayShareReportCalled = false
+        var main_share_viewModel: Main.Share.ViewModel!
 
         func displayRecord(viewModel: Main.FetchRecord.ViewModel) {
             displayRecordCalled = true
-            // TODO test fields of the view model as described here
-            // https://clean-swift.com/clean-swift-tdd-part-4-presenter/
             main_fetchRecords_viewModel = viewModel
         }
-        func displayShareView(viewModel: Main.Share.ViewModel) {}
+        
+        func displayShareView(viewModel: Main.Share.ViewModel) {
+            displayShareReportCalled = true
+            main_share_viewModel = viewModel
+        }
     }
 
     // MARK: - Tests
-
+    // MARK: Present Record
+    
     private func getDateString(date: RecordDate) -> String {
         let dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()
@@ -70,9 +75,7 @@ class MainPresenterTests: XCTestCase {
         
         // When
         sut.presentRecord(response: response)
-        
 
-        
         // Then
         let viewModel = spy.main_fetchRecords_viewModel!
         XCTAssertEqual(viewModel.date, getDateString(date: record.date), "Presentig record should properly format the date")
@@ -110,4 +113,20 @@ class MainPresenterTests: XCTestCase {
         // Then
         XCTAssertTrue(spy.displayRecordCalled, "presentRecord(response:) should ask the view controller to display the result")
     }
+    
+    // MARK: Present Share Report
+    
+    func testPresentShareReportShouldFormatReport() {
+        // Given
+        let spy = MainDisplayLogicSpy()
+        sut.viewController = spy
+        let response = Main.Share.Response(month: Calendar.current.component(.month, from: Date()), records: [Record()])
+        
+        // When
+        sut.presentShareReport(response: response)
+        
+        // Then
+        XCTAssertTrue(spy.displayShareReportCalled, "presentShareReport asks view controller to display report")
+    }
+
 }
