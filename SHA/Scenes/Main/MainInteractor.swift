@@ -71,5 +71,10 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     // MARK: - Share
     
     func share(request: Main.Share.Request) {
+        let month = Calendar.current.component(.month, from: currentDate.rawDate)
+        worker.fetchRecords(for: month) { records in
+            let response = Main.Share.Response(month: month, records: records)
+            self.presenter?.presentShareReport(response: response)
+        }
     }
 }

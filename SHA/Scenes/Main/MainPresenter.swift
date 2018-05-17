@@ -14,6 +14,7 @@ import UIKit
 
 protocol MainPresentationLogic {
     func presentRecord(response: Main.FetchRecord.Response)
+    func presentShareReport(response: Main.Share.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
@@ -26,7 +27,7 @@ class MainPresenter: MainPresentationLogic {
     }()
 
     // MARK: - Record
-
+    
     func presentRecord(response: Main.FetchRecord.Response) {
         let record = response.record
         let date = record.date
@@ -38,5 +39,10 @@ class MainPresenter: MainPresentationLogic {
         
         let viewModel = Main.FetchRecord.ViewModel(date: displayDate, full: displayFull, express: displayExpress)
         viewController?.displayRecord(viewModel: viewModel)
+    }
+    
+    // MARK: - Share
+    
+    func presentShareReport(response: Main.Share.Response) {
     }
 }

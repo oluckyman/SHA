@@ -51,6 +51,13 @@ enum Main {
     
     enum Share {
         struct Request {}
-        struct ViewModel {}
+        struct Response {
+            var month: Int
+            var records: [Record]
+        }
+        struct ViewModel {
+            var url: URL
+            var message: String
+        }
     }
 }

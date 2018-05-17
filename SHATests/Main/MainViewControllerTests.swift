@@ -52,7 +52,7 @@ class MainViewControllerTests: XCTestCase {
         var incrementCalled = false
         var incrementCounter: Record.Counter!
         var shareCalled = false
-        
+                
         func fetchRecord(request: Main.FetchRecord.Request) {
             fetchRecordCalled = true
         }
@@ -141,19 +141,4 @@ class MainViewControllerTests: XCTestCase {
         // Then
         XCTAssertTrue(spy.shareCalled, "shareReport() should ask the interactor to share")
     }
-    
-//    func testDisplayShareReport() {
-//        // Given
-//        let viewModel = Main.Share.ViewModel()
-//        
-//        // When
-//        loadView()
-//        sut.displayRecord(viewModel: viewModel)
-//        
-//        // Then
-//        XCTAssertEqual(sut.dateLabel.text, expected.date, "displayRecord(viewModel:) should update the Date label")
-//        XCTAssertEqual(sut.fullButton.currentTitle, expected.full, "displayRecord(viewModel:) should update the Full button title")
-//        XCTAssertEqual(sut.expressButton.currentTitle, expected.express, "displayRecord(viewModel:) should update the Expres button title")
-//    }
-
 }

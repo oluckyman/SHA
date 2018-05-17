@@ -161,6 +161,22 @@ class MainViewController: UIViewController, MainDisplayLogic {
     }
     
     func displayShareView(viewModel: Main.Share.ViewModel) {
-        
+        let url = viewModel.url
+        let message = viewModel.message
+        let activityViewController = UIActivityViewController(
+            activityItems: [message, url],
+            applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [
+            .assignToContact,
+            .saveToCameraRoll,
+            .postToVimeo,
+            .postToTwitter,
+            .postToFlickr,
+            .postToFacebook,
+            .postToWeibo,
+            .postToTencentWeibo,
+            .openInIBooks
+        ]
+        present(activityViewController, animated: true, completion: nil)
     }
 }

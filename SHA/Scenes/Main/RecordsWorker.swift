@@ -31,6 +31,10 @@ class RecordsWorker {
         }
     }
     
+    func fetchRecords(for month: Int, completionHandler: @escaping ([Record]) -> Void) {
+        
+    }
+    
     func increment(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
         fetchRecord(for: date) { record in
             var newRecord = Record(date: date, full: record.full, express: record.express)
