@@ -151,8 +151,8 @@ class MainPresenterTests: XCTestCase {
         sut.viewController = spy
         let records = [
             Record(date: RecordDate(from: "2018-01-01")!, full: 0, express: 1),
-            Record(date: RecordDate(from: "2018-01-10")!, full: 12, express: 12),
             Record(date: RecordDate(from: "2018-01-11")!, full: 11, express: 0),
+            Record(date: RecordDate(from: "2018-01-10")!, full: 12, express: 12),
             Record(date: RecordDate(from: "2018-01-29")!, full: 0, express: 0),
         ]
         let date = RecordDate(from: "2018-01-15")!

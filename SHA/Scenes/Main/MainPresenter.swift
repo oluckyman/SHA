@@ -75,7 +75,7 @@ class MainPresenter: MainPresentationLogic {
     private func formatCsv(from records: [Record]) -> String {
         var csvText = "Fecha,Albarán,Descripción del servicio,Unidades,Coste sin IVA,I.V.A.,Importe total sin iva\n"
         var row = 2
-        records.forEach { record in
+        records.sorted(by: { $0.date.rawDate < $1.date.rawDate }).forEach { record in
             if record.full > 0 {
                 csvText += "\(record.date),,Traducción Full,\(record.full),20,0.21,=E\(row)*D\(row)\n"
                 row += 1
