@@ -50,21 +50,21 @@ class MainInteractorTests: XCTestCase {
     class RecordsWorkerSpy: RecordsWorker {
         var fetchRecordCalled = false
         var incrementCalled = false
-        var incrementArguments: (Record.Counters, RecordDate)?
+        var incrementArguments: (Record.Counter, RecordDate)?
         var resetCalled = false
-        var resetArguments: (Record.Counters, RecordDate)?
+        var resetArguments: (Record.Counter, RecordDate)?
         
         override func fetchRecord(for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             fetchRecordCalled = true
             completionHandler(Record())
         }
         
-        override func increment(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+        override func increment(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             incrementCalled = true
             incrementArguments = (counter, date)
         }
         
-        override func reset(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+        override func reset(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             resetCalled = true
             resetArguments = (counter, date)
         }

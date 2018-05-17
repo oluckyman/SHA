@@ -13,7 +13,6 @@
 import UIKit
 
 protocol RecordsStore {
-    var records: [Record] { get set}
     func fetchRecords(completionHandler: @escaping ([Record]) -> Void)
     func update(record: Record, completionHanler: @escaping (Record) -> Void)
 }
@@ -32,7 +31,7 @@ class RecordsWorker {
         }
     }
     
-    func increment(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+    func increment(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
         fetchRecord(for: date) { record in
             var newRecord = Record(date: date, full: record.full, express: record.express)
             switch counter {
@@ -45,7 +44,7 @@ class RecordsWorker {
         }
     }
     
-    func reset(counter: Record.Counters, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
+    func reset(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
         fetchRecord(for: date) { record in
             var newRecord = Record(date: date, full: record.full, express: record.express)
             switch counter {

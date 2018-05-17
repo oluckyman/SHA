@@ -9,7 +9,7 @@
 @testable import SHA
 import XCTest
 
-class RecordsStoreTests: XCTestCase {
+class RecordsMemStoreTests: XCTestCase {
     // MARK: - Subject under test
     
     var sut: RecordsMemStore!

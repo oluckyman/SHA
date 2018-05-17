@@ -50,7 +50,7 @@ class MainViewControllerTests: XCTestCase {
     class MainBusinessLogicSpy: MainBusinessLogic {
         var fetchRecordCalled = false
         var incrementCalled = false
-        var incrementCounter: Record.Counters!
+        var incrementCounter: Record.Counter!
 
         func fetchRecord(request: Main.FetchRecord.Request) {
             fetchRecordCalled = true

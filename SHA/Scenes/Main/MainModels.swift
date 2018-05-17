@@ -29,13 +29,13 @@ enum Main {
     
     enum Increment {
         struct Request {
-            var counter: Record.Counters
+            var counter: Record.Counter
         }
     }
     
     enum Reset {
         struct Request {
-            var counter: Record.Counters
+            var counter: Record.Counter
         }
     }
     

@@ -10,7 +10,9 @@
 		A02D0D9820A97E31004EEC63 /* RecordDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D0D9720A97E31004EEC63 /* RecordDate.swift */; };
 		A0543D6E20A2C50300FF88B4 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0543D6D20A2C50300FF88B4 /* Record.swift */; };
 		A05C291920A5A482009853DB /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05C291820A5A482009853DB /* UIExtensions.swift */; };
-		A0904A9E20AAFB8D00C31593 /* RecordsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0904A9D20AAFB8D00C31593 /* RecordsStoreTests.swift */; };
+		A07171D520AD67FA0090E861 /* RecordsPlistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07171D420AD67FA0090E861 /* RecordsPlistStore.swift */; };
+		A07171D920AD6F860090E861 /* RecordsPlistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07171D820AD6F860090E861 /* RecordsPlistStoreTests.swift */; };
+		A0904A9E20AAFB8D00C31593 /* RecordsMemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0904A9D20AAFB8D00C31593 /* RecordsMemStoreTests.swift */; };
 		A0C077E220907C1F001A5FB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C077E120907C1F001A5FB0 /* AppDelegate.swift */; };
 		A0C077E720907C1F001A5FB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C077E520907C1F001A5FB0 /* Main.storyboard */; };
 		A0C077E920907C24001A5FB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C077E820907C24001A5FB0 /* Assets.xcassets */; };
@@ -42,7 +44,9 @@
 		A02D0D9720A97E31004EEC63 /* RecordDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDate.swift; sourceTree = "<group>"; };
 		A0543D6D20A2C50300FF88B4 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		A05C291820A5A482009853DB /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
-		A0904A9D20AAFB8D00C31593 /* RecordsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsStoreTests.swift; sourceTree = "<group>"; };
+		A07171D420AD67FA0090E861 /* RecordsPlistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsPlistStore.swift; sourceTree = "<group>"; };
+		A07171D820AD6F860090E861 /* RecordsPlistStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsPlistStoreTests.swift; sourceTree = "<group>"; };
+		A0904A9D20AAFB8D00C31593 /* RecordsMemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsMemStoreTests.swift; sourceTree = "<group>"; };
 		A0C077DE20907C1F001A5FB0 /* SHA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SHA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C077E120907C1F001A5FB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0C077E620907C1F001A5FB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 				A0C0780720908F12001A5FB0 /* MainViewController.swift */,
 				A0C0780420908F12001A5FB0 /* RecordsWorker.swift */,
 				A0C46D6A20A06B9D007263DA /* RecordsMemStore.swift */,
+				A07171D420AD67FA0090E861 /* RecordsPlistStore.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -169,8 +174,9 @@
 				A0C078112090923F001A5FB0 /* MainInteractorTests.swift */,
 				A0C078132090923F001A5FB0 /* MainPresenterTests.swift */,
 				A0C078102090923F001A5FB0 /* MainViewControllerTests.swift */,
+				A0904A9D20AAFB8D00C31593 /* RecordsMemStoreTests.swift */,
+				A07171D820AD6F860090E861 /* RecordsPlistStoreTests.swift */,
 				A0C078122090923F001A5FB0 /* RecordsWorkerTests.swift */,
-				A0904A9D20AAFB8D00C31593 /* RecordsStoreTests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 				A0543D6E20A2C50300FF88B4 /* Record.swift in Sources */,
 				A0C0780C20908F12001A5FB0 /* MainModels.swift in Sources */,
 				A02D0D9820A97E31004EEC63 /* RecordDate.swift in Sources */,
+				A07171D520AD67FA0090E861 /* RecordsPlistStore.swift in Sources */,
 				A0C0780920908F12001A5FB0 /* MainPresenter.swift in Sources */,
 				A05C291920A5A482009853DB /* UIExtensions.swift in Sources */,
 				A0C0780A20908F12001A5FB0 /* RecordsWorker.swift in Sources */,
@@ -294,7 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0904A9E20AAFB8D00C31593 /* RecordsStoreTests.swift in Sources */,
+				A0904A9E20AAFB8D00C31593 /* RecordsMemStoreTests.swift in Sources */,
+				A07171D920AD6F860090E861 /* RecordsPlistStoreTests.swift in Sources */,
 				A0C078142090923F001A5FB0 /* MainViewControllerTests.swift in Sources */,
 				A0C078152090923F001A5FB0 /* MainInteractorTests.swift in Sources */,
 				A0C078162090923F001A5FB0 /* RecordsWorkerTests.swift in Sources */,
