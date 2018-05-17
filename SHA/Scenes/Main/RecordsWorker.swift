@@ -32,7 +32,9 @@ class RecordsWorker {
     }
     
     func fetchRecords(for month: Int, completionHandler: @escaping ([Record]) -> Void) {
-        
+        recordsStore.fetchRecords { records in
+            completionHandler(records)
+        }
     }
     
     func increment(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
