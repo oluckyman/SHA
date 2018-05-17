@@ -144,5 +144,39 @@ class MainPresenterTests: XCTestCase {
         XCTAssertEqual(viewModel.url, expectedUrl, "should format csv url properly")
         XCTAssertEqual(viewModel.message, expectedMessage, "should format messsage properly")
     }
+    
+    func testFormatCsvText() {
+        // Given
+        let spy = MainDisplayLogicSpy()
+        sut.viewController = spy
+        let records = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 0, express: 1),
+            Record(date: RecordDate(from: "2018-01-10")!, full: 12, express: 12),
+            Record(date: RecordDate(from: "2018-01-11")!, full: 11, express: 0),
+            Record(date: RecordDate(from: "2018-01-29")!, full: 0, express: 0),
+        ]
+        let date = RecordDate(from: "2018-01-15")!
+        var expectedCsvLines = ["Fecha,Albarán,Descripción del servicio,Unidades,Coste sin IVA,I.V.A.,Importe total sin iva"]
+        expectedCsvLines.append("2018-01-01,,Traducción Express,1,10,0.21,=E2*D2")
+        expectedCsvLines.append("2018-01-10,,Traducción Full,12,20,0.21,=E3*D3")
+        expectedCsvLines.append("2018-01-10,,Traducción Express,12,10,0.21,=E4*D4")
+        expectedCsvLines.append("2018-01-11,,Traducción Full,11,20,0.21,=E5*D5")
+        
+        let response = Main.Share.Response(date: date, records: records)
+        
+        // When
+        sut.presentShareReport(response: response)
+        
+        // Then
+        let viewModel = spy.main_share_viewModel!
+        var actualLines = [String]()
+        try? String(contentsOf: viewModel.url).enumerateLines{ (line, stop) -> () in
+            actualLines.append(line)
+        }
+
+        for (index, expected) in expectedCsvLines.enumerated() {
+            XCTAssertEqual(actualLines[index], expected, "Should write proper line #\(index) in CSV file")
+        }
+    }
 
 }

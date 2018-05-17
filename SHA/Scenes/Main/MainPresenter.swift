@@ -59,7 +59,32 @@ class MainPresenter: MainPresentationLogic {
         let reportDate = reportFormatter.string(from: response.date.rawDate)
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("SHA \(reportDate).csv")
         let message = messageFormatter.string(from: response.date.rawDate)
+        
+        let csvText = formatCsv(from: response.records)
+        do {
+            try csvText.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            print("Cannot write to \(url)")
+            print("\(error)")
+        }
+
         let viewModel = Main.Share.ViewModel(url: url, message: message)
         viewController?.displayShareView(viewModel: viewModel)
+    }
+    
+    private func formatCsv(from records: [Record]) -> String {
+        var csvText = "Fecha,Albarán,Descripción del servicio,Unidades,Coste sin IVA,I.V.A.,Importe total sin iva\n"
+        var row = 2
+        records.forEach { record in
+            if record.full > 0 {
+                csvText += "\(record.date),,Traducción Full,\(record.full),20,0.21,=E\(row)*D\(row)\n"
+                row += 1
+            }
+            if record.express > 0 {
+                csvText += "\(record.date),,Traducción Express,\(record.express),10,0.21,=E\(row)*D\(row)\n"
+                row += 1
+            }
+        }
+        return csvText
     }
 }
