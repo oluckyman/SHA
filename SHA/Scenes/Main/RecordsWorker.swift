@@ -31,9 +31,11 @@ class RecordsWorker {
         }
     }
     
+    // FIX: it will return previous year records as well which is wrong!
     func fetchRecords(for month: Int, completionHandler: @escaping ([Record]) -> Void) {
         recordsStore.fetchRecords { records in
-            completionHandler(records)
+            let recordsToReport = records.filter { Calendar.current.component(.month, from: $0.date.rawDate) == month }
+            completionHandler(recordsToReport)
         }
     }
     
