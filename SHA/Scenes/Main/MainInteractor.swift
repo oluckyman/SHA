@@ -26,7 +26,7 @@ protocol MainDataStore {
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
-    var worker = RecordsWorker(recordsStore: RecordsMemStore())
+    var worker = RecordsWorker(recordsStore: RecordsPlistStore())
     
     var currentDate = RecordDate()
     

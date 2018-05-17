@@ -62,11 +62,13 @@ class MainInteractorTests: XCTestCase {
         override func increment(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             incrementCalled = true
             incrementArguments = (counter, date)
+            completionHandler(Record())
         }
         
         override func reset(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             resetCalled = true
             resetArguments = (counter, date)
+            completionHandler(Record())
         }
     }
     
@@ -88,6 +90,8 @@ class MainInteractorTests: XCTestCase {
     
     func testFetchRecordAsksPresenterToFormatRecord() {
         // Given
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        sut.worker = workerSpy
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
         let request = Main.FetchRecord.Request()
@@ -122,6 +126,7 @@ class MainInteractorTests: XCTestCase {
     
     func testIncrementAsksPresenterToFormatRecord() {
         // Given
+        sut.worker = RecordsWorker(recordsStore: RecordsMemStore()) // Use real worker here, but with Mem store
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
         let request = Main.Increment.Request(counter: .full)
@@ -157,6 +162,8 @@ class MainInteractorTests: XCTestCase {
     
     func testResetAsksPresenterToFormatRecord() {
         // Given
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        sut.worker = workerSpy
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
         let request = Main.Reset.Request(counter: .full)
