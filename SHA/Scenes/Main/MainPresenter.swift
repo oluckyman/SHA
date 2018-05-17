@@ -14,6 +14,7 @@ import UIKit
 
 protocol MainPresentationLogic {
     func presentRecord(response: Main.FetchRecord.Response)
+    func presentShareReport(response: Main.Share.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
@@ -24,9 +25,21 @@ class MainPresenter: MainPresentationLogic {
         dateFormatter.setLocalizedDateFormatFromTemplate("EdMMM")
         return dateFormatter
     }()
+    
+    let messageFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMMM YYYY")
+        return dateFormatter
+    }()
+    
+    let reportFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM"
+        return dateFormatter
+    }()
 
     // MARK: - Record
-
+    
     func presentRecord(response: Main.FetchRecord.Response) {
         let record = response.record
         let date = record.date
@@ -38,5 +51,40 @@ class MainPresenter: MainPresentationLogic {
         
         let viewModel = Main.FetchRecord.ViewModel(date: displayDate, full: displayFull, express: displayExpress)
         viewController?.displayRecord(viewModel: viewModel)
+    }
+    
+    // MARK: - Share
+    
+    func presentShareReport(response: Main.Share.Response) {
+        let reportDate = reportFormatter.string(from: response.date.rawDate)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("SHA \(reportDate).csv")
+        let message = messageFormatter.string(from: response.date.rawDate)
+        
+        let csvText = formatCsv(from: response.records)
+        do {
+            try csvText.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            print("Cannot write to \(url)")
+            print("\(error)")
+        }
+
+        let viewModel = Main.Share.ViewModel(url: url, message: message)
+        viewController?.displayShareView(viewModel: viewModel)
+    }
+    
+    private func formatCsv(from records: [Record]) -> String {
+        var csvText = "Fecha,Albarán,Descripción del servicio,Unidades,Coste sin IVA,I.V.A.,Importe total sin iva\n"
+        var row = 2
+        records.sorted(by: { $0.date.rawDate < $1.date.rawDate }).forEach { record in
+            if record.full > 0 {
+                csvText += "\(record.date),,Traducción Full,\(record.full),20,0.21,=E\(row)*D\(row)\n"
+                row += 1
+            }
+            if record.express > 0 {
+                csvText += "\(record.date),,Traducción Express,\(record.express),10,0.21,=E\(row)*D\(row)\n"
+                row += 1
+            }
+        }
+        return csvText
     }
 }

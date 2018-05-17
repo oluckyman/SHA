@@ -114,7 +114,7 @@ class RecordsWorkerTests: XCTestCase {
         
         // Then
         XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecord(for date:) should ask the data store to fetch records")
-        wait(for: [expectRecord], timeout: 0.6)
+        wait(for: [expectRecord], timeout: 2)
     }
     
     // MARK: Increment
@@ -159,6 +159,53 @@ class RecordsWorkerTests: XCTestCase {
         wait(for: [expectRecord], timeout: 2)
         XCTAssert(storeSpy.updateRecordCalled, "Calling fetchRecord(for date:) should ask the data store to update record")
         XCTAssertEqual(actualRecord, Record(date: RecordDate(from: "2018-01-01")!, full: 42, express: 0), "Worker returns reset record")
-
+    }
+    
+    // MARK: Fetch Records
+    
+    func testFetchRecordsReturnsEmptyArrayIfNoRecords() {
+        // Given
+        let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
+        let expect = expectation(description: "Wait for fetch")
+        
+        // When
+        sut.fetchRecords(forMonthWith: RecordDate()) { records in
+            expect.fulfill()
+            XCTAssertEqual(records, [], "Worker returns empty array if no records in the store")
+        }
+        
+        // Then
+        XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecords(for month:) should ask the data store to fetch records")
+        wait(for: [expect], timeout: 0.6)
+    }
+    
+    func testFetchRecordsReturnsRecordsFromRecords() {
+        // Given
+        let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
+        let records = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 1, express: 1),
+            Record(date: RecordDate(from: "2018-02-01")!, full: 2, express: 1),
+            Record(date: RecordDate(from: "2018-02-02")!, full: 2, express: 2),
+            Record(date: RecordDate(from: "2020-12-12")!, full: 12, express: 12),
+            Record(date: RecordDate(from: "2018-02-03")!, full: 2, express: 3),
+        ]
+        storeSpy.recordsInStore = records
+        let expectedRecords = [
+            records[1], records[2], records[4]
+        ]
+        let date = RecordDate(from: "2018-02-02")!
+        let expect = expectation(description: "Wait for fetch")
+        
+        // When
+        var actualRecords: [Record]!
+        sut.fetchRecords(forMonthWith: date) { records in
+            expect.fulfill()
+            actualRecords = records
+        }
+        
+        // Then
+        wait(for: [expect], timeout: 0.6)
+        XCTAssert(storeSpy.fetchRecordsCalled, "Calling fetchRecords(for month:) should ask the data store to fetch records")
+        XCTAssertEqual(actualRecords, expectedRecords, "Worker should return all records for specified month")
     }
 }

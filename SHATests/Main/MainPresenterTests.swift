@@ -40,21 +40,36 @@ class MainPresenterTests: XCTestCase {
     class MainDisplayLogicSpy: MainDisplayLogic {
         var displayRecordCalled = false
         var main_fetchRecords_viewModel: Main.FetchRecord.ViewModel!
+        var displayShareReportCalled = false
+        var main_share_viewModel: Main.Share.ViewModel!
 
         func displayRecord(viewModel: Main.FetchRecord.ViewModel) {
             displayRecordCalled = true
-            // TODO test fields of the view model as described here
-            // https://clean-swift.com/clean-swift-tdd-part-4-presenter/
             main_fetchRecords_viewModel = viewModel
+        }
+        
+        func displayShareView(viewModel: Main.Share.ViewModel) {
+            displayShareReportCalled = true
+            main_share_viewModel = viewModel
         }
     }
 
     // MARK: - Tests
-
+    // MARK: Present Record
+    
     private func getDateString(date: RecordDate) -> String {
         let dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()
             dateFormatter.setLocalizedDateFormatFromTemplate("EdMMM")
+            return dateFormatter
+        }()
+        return dateFormatter.string(from: date.rawDate)
+    }
+    
+    private func getMonthString(date: RecordDate) -> String {
+        let dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.setLocalizedDateFormatFromTemplate("MMMM YYYY")
             return dateFormatter
         }()
         return dateFormatter.string(from: date.rawDate)
@@ -69,9 +84,7 @@ class MainPresenterTests: XCTestCase {
         
         // When
         sut.presentRecord(response: response)
-        
 
-        
         // Then
         let viewModel = spy.main_fetchRecords_viewModel!
         XCTAssertEqual(viewModel.date, getDateString(date: record.date), "Presentig record should properly format the date")
@@ -109,4 +122,61 @@ class MainPresenterTests: XCTestCase {
         // Then
         XCTAssertTrue(spy.displayRecordCalled, "presentRecord(response:) should ask the view controller to display the result")
     }
+    
+    // MARK: Present Share Report
+    
+    func testPresentShareReportShouldFormatReport() {
+        // Given
+        let spy = MainDisplayLogicSpy()
+        sut.viewController = spy
+        let date = RecordDate(from: "2018-01-01")!
+        let expectedUrl = FileManager.default.temporaryDirectory.appendingPathComponent("SHA 2018-01.csv")
+        let expectedMessage = getMonthString(date: date)
+        
+        let response = Main.Share.Response(date: date, records: [Record()])
+        
+        // When
+        sut.presentShareReport(response: response)
+        
+        // Then
+        let viewModel = spy.main_share_viewModel!
+        XCTAssertTrue(spy.displayShareReportCalled, "presentShareReport asks view controller to display report")
+        XCTAssertEqual(viewModel.url, expectedUrl, "should format csv url properly")
+        XCTAssertEqual(viewModel.message, expectedMessage, "should format messsage properly")
+    }
+    
+    func testFormatCsvText() {
+        // Given
+        let spy = MainDisplayLogicSpy()
+        sut.viewController = spy
+        let records = [
+            Record(date: RecordDate(from: "2018-01-01")!, full: 0, express: 1),
+            Record(date: RecordDate(from: "2018-01-11")!, full: 11, express: 0),
+            Record(date: RecordDate(from: "2018-01-10")!, full: 12, express: 12),
+            Record(date: RecordDate(from: "2018-01-29")!, full: 0, express: 0),
+        ]
+        let date = RecordDate(from: "2018-01-15")!
+        var expectedCsvLines = ["Fecha,Albarán,Descripción del servicio,Unidades,Coste sin IVA,I.V.A.,Importe total sin iva"]
+        expectedCsvLines.append("2018-01-01,,Traducción Express,1,10,0.21,=E2*D2")
+        expectedCsvLines.append("2018-01-10,,Traducción Full,12,20,0.21,=E3*D3")
+        expectedCsvLines.append("2018-01-10,,Traducción Express,12,10,0.21,=E4*D4")
+        expectedCsvLines.append("2018-01-11,,Traducción Full,11,20,0.21,=E5*D5")
+        
+        let response = Main.Share.Response(date: date, records: records)
+        
+        // When
+        sut.presentShareReport(response: response)
+        
+        // Then
+        let viewModel = spy.main_share_viewModel!
+        var actualLines = [String]()
+        try? String(contentsOf: viewModel.url).enumerateLines{ (line, stop) -> () in
+            actualLines.append(line)
+        }
+
+        for (index, expected) in expectedCsvLines.enumerated() {
+            XCTAssertEqual(actualLines[index], expected, "Should write proper line #\(index) in CSV file")
+        }
+    }
+
 }

@@ -31,6 +31,17 @@ class RecordsWorker {
         }
     }
     
+    func fetchRecords(forMonthWith date: RecordDate, completionHandler: @escaping ([Record]) -> Void) {
+        let cal = Calendar.current
+        recordsStore.fetchRecords { records in
+            let recordsToReport = records.filter {
+                cal.component(.year, from: $0.date.rawDate) == cal.component(.year, from: date.rawDate) &&
+                cal.component(.month, from: $0.date.rawDate) == cal.component(.month, from: date.rawDate)
+            }
+            completionHandler(recordsToReport)
+        }
+    }
+    
     func increment(counter: Record.Counter, for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
         fetchRecord(for: date) { record in
             var newRecord = Record(date: date, full: record.full, express: record.express)

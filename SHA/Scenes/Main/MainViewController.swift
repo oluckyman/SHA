@@ -14,6 +14,7 @@ import UIKit
 
 protocol MainDisplayLogic: class {
     func displayRecord(viewModel: Main.FetchRecord.ViewModel)
+    func displayShareView(viewModel: Main.Share.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -144,5 +145,38 @@ class MainViewController: UIViewController, MainDisplayLogic {
     func navigateNext() {
         let request = Main.Navigate.Request(direction: .next)
         interactor?.navigate(request: request)
+    }
+    
+    // MARK: - Share
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            shareReport()
+        }
+    }
+    
+    func shareReport() {
+        let request = Main.Share.Request()
+        interactor?.share(request: request)
+    }
+    
+    func displayShareView(viewModel: Main.Share.ViewModel) {
+        let url = viewModel.url
+        let message = viewModel.message
+        let activityViewController = UIActivityViewController(
+            activityItems: [message, url],
+            applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [
+            .assignToContact,
+            .saveToCameraRoll,
+            .postToVimeo,
+            .postToTwitter,
+            .postToFlickr,
+            .postToFacebook,
+            .postToWeibo,
+            .postToTencentWeibo,
+            .openInIBooks
+        ]
+        present(activityViewController, animated: true, completion: nil)
     }
 }

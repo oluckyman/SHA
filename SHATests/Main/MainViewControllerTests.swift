@@ -51,7 +51,8 @@ class MainViewControllerTests: XCTestCase {
         var fetchRecordCalled = false
         var incrementCalled = false
         var incrementCounter: Record.Counter!
-
+        var shareCalled = false
+                
         func fetchRecord(request: Main.FetchRecord.Request) {
             fetchRecordCalled = true
         }
@@ -62,6 +63,9 @@ class MainViewControllerTests: XCTestCase {
         }
         func reset(request: Main.Reset.Request) {}
         func navigate(request: Main.Navigate.Request) {}
+        func share(request: Main.Share.Request) {
+            shareCalled = true
+        }
     }
 
     // MARK: - Tests
@@ -93,6 +97,8 @@ class MainViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.expressButton.currentTitle, expected.express, "displayRecord(viewModel:) should update the Expres button title")
     }
     
+    // MARK: Increment
+    
     func testShouldAskInteractorToIncrementFull() {
         // Given
         let spy = MainBusinessLogicSpy()
@@ -119,5 +125,20 @@ class MainViewControllerTests: XCTestCase {
         // Then
         XCTAssertTrue(spy.incrementCalled, "incrementFull() should ask the interactor to increment")
         XCTAssertEqual(spy.incrementCounter, .express, "should ask to increment .express counter")
+    }
+    
+    // MARK: Share
+    
+    func testShouldAskInteractorToShareReport() {
+        // Given
+        let spy = MainBusinessLogicSpy()
+        sut.interactor = spy
+        
+        // When
+        loadView()
+        sut.shareReport()
+        
+        // Then
+        XCTAssertTrue(spy.shareCalled, "shareReport() should ask the interactor to share")
     }
 }

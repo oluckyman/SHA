@@ -40,10 +40,17 @@ class MainInteractorTests: XCTestCase {
     class MainPresentationLogicSpy: MainPresentationLogic {
         var presentRecordCalled = false
         var main_fetchRecord_response: Main.FetchRecord.Response?
-        
+        var presentShareReportCalled = false
+        var main_share_response: Main.Share.Response?
+
         func presentRecord(response: Main.FetchRecord.Response) {
             presentRecordCalled = true
             main_fetchRecord_response = response
+        }
+        
+        func presentShareReport(response: Main.Share.Response) {
+            presentShareReportCalled = true
+            main_share_response = response
         }
     }
     
@@ -53,6 +60,7 @@ class MainInteractorTests: XCTestCase {
         var incrementArguments: (Record.Counter, RecordDate)?
         var resetCalled = false
         var resetArguments: (Record.Counter, RecordDate)?
+        var records: [Record] = []
         
         override func fetchRecord(for date: RecordDate, completionHandler: @escaping (Record) -> Void) {
             fetchRecordCalled = true
@@ -69,6 +77,10 @@ class MainInteractorTests: XCTestCase {
             resetCalled = true
             resetArguments = (counter, date)
             completionHandler(Record())
+        }
+        
+        override func fetchRecords(forMonthWith date: RecordDate, completionHandler: @escaping ([Record]) -> Void) {
+            completionHandler(records)
         }
     }
     
@@ -209,4 +221,28 @@ class MainInteractorTests: XCTestCase {
         XCTAssertEqual(record, Record(date: RecordDate(from: "2018-01-02")!, full: 0, express: 0))
     }
     
+    // MARK: Share
+    
+    func testShareAsksPresenterToFormatReport() {
+        // Given
+        let presenterSpy = MainPresentationLogicSpy()
+        sut.presenter = presenterSpy
+        
+        let expectedDate = RecordDate()
+        let expectedRecords = [
+            Record(date: RecordDate(), full: 1, express: 1),
+        ]
+        let workerSpy = RecordsWorkerSpy(recordsStore: RecordsMemStore())
+        workerSpy.records = expectedRecords
+        sut.worker = workerSpy
+        let request = Main.Share.Request()
+
+        // When
+        sut.share(request: request)
+        
+        // Then
+        XCTAssertTrue(presenterSpy.presentShareReportCalled, "share() should ask presenter to format a report")
+        XCTAssertEqual(presenterSpy.main_share_response?.date, expectedDate, "should indicate the date")
+        XCTAssertEqual(presenterSpy.main_share_response?.records, expectedRecords, "should provide proper records list")
+    }
 }

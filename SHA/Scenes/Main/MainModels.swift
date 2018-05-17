@@ -48,4 +48,16 @@ enum Main {
             var direction: Direction
         }
     }
+    
+    enum Share {
+        struct Request {}
+        struct Response {
+            var date: RecordDate
+            var records: [Record]
+        }
+        struct ViewModel {
+            var url: URL
+            var message: String
+        }
+    }
 }
