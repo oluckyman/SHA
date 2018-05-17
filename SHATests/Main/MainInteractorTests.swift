@@ -79,7 +79,7 @@ class MainInteractorTests: XCTestCase {
             completionHandler(Record())
         }
         
-        override func fetchRecords(for month: Int, completionHandler: @escaping ([Record]) -> Void) {
+        override func fetchRecords(forMonthWith date: RecordDate, completionHandler: @escaping ([Record]) -> Void) {
             completionHandler(records)
         }
     }
@@ -228,7 +228,7 @@ class MainInteractorTests: XCTestCase {
         let presenterSpy = MainPresentationLogicSpy()
         sut.presenter = presenterSpy
         
-        let expectedMonth = Calendar.current.component(.month, from: Date())
+        let expectedDate = RecordDate()
         let expectedRecords = [
             Record(date: RecordDate(), full: 1, express: 1),
         ]
@@ -242,7 +242,7 @@ class MainInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(presenterSpy.presentShareReportCalled, "share() should ask presenter to format a report")
-        XCTAssertEqual(presenterSpy.main_share_response?.month, expectedMonth, "should indicate the month")
+        XCTAssertEqual(presenterSpy.main_share_response?.date, expectedDate, "should indicate the date")
         XCTAssertEqual(presenterSpy.main_share_response?.records, expectedRecords, "should provide proper records list")
     }
 }

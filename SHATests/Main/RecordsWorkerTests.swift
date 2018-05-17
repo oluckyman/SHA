@@ -167,10 +167,9 @@ class RecordsWorkerTests: XCTestCase {
         // Given
         let storeSpy = sut.recordsStore as! RecordsMemStoreSpy
         let expect = expectation(description: "Wait for fetch")
-        let month = Calendar.current.component(.month, from: Date())
         
         // When
-        sut.fetchRecords(for: month) { records in
+        sut.fetchRecords(forMonthWith: RecordDate()) { records in
             expect.fulfill()
             XCTAssertEqual(records, [], "Worker returns empty array if no records in the store")
         }
@@ -194,12 +193,12 @@ class RecordsWorkerTests: XCTestCase {
         let expectedRecords = [
             records[1], records[2], records[4]
         ]
-        let month = Calendar.current.component(.month, from: RecordDate(from: "2018-02-02")!.rawDate)
+        let date = RecordDate(from: "2018-02-02")!
         let expect = expectation(description: "Wait for fetch")
         
         // When
         var actualRecords: [Record]!
-        sut.fetchRecords(for: month) { records in
+        sut.fetchRecords(forMonthWith: date) { records in
             expect.fulfill()
             actualRecords = records
         }

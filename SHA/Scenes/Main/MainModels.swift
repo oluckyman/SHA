@@ -52,7 +52,7 @@ enum Main {
     enum Share {
         struct Request {}
         struct Response {
-            var month: Int
+            var date: RecordDate
             var records: [Record]
         }
         struct ViewModel {
